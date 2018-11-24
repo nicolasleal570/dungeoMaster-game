@@ -548,6 +548,10 @@ public class Jugador {
         return fuerza;
     }
 
+    public void setFuerza(int fuerza) {
+        this.fuerza = fuerza;
+    }
+
     public AlmacenEquipo getAlmacenEquipo() {
         return ae;
     }

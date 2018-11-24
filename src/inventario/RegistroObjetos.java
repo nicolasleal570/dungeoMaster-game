@@ -1,6 +1,11 @@
 package inventario;
 
-import inventario.consumibles.Consumibles;
+import inventario.consumibles.Galleta;
+import inventario.consumibles.Manzana;
+import inventario.consumibles.PocionDefensa;
+import inventario.consumibles.PocionFuerza;
+import inventario.consumibles.PocionVida;
+import inventario.consumibles.Zanahoria;
 import inventario.equipables.Desarmado;
 import inventario.equipables.Escopeta;
 import inventario.equipables.Pistola;
@@ -22,27 +27,27 @@ public class RegistroObjetos {
 
             // Objetos consumibles 0 - 19
             case 0:
-                objeto = new Consumibles(idObjeto, "Pocion de Defensa", "");
+                objeto = new PocionDefensa(idObjeto, "Pocion de Defensa", "", 1, 1, 15, 1);
                 break;
 
             case 1:
-                objeto = new Consumibles(idObjeto, "Pocion de Fuerza", "");
+                objeto = new PocionFuerza(idObjeto, "Pocion de Fuerza", "", 1, 15, 1, 1);
                 break;
 
             case 2:
-                objeto = new Consumibles(idObjeto, "Pocion de Vida", "");
+                objeto = new PocionVida(idObjeto, "Pocion de Vida", "", 1, 5, 5, 15);
                 break;
 
             case 3:
-                objeto = new Consumibles(idObjeto, "Manzana", "");
+                objeto = new Manzana(idObjeto, "Manzana", "", 1, 8, 4, 8);
                 break;
 
             case 4:
-                objeto = new Consumibles(idObjeto, "Zanahoria", "");
+                objeto = new Zanahoria(idObjeto, "Zanahoria", "", 1, 4, 8, 4);
                 break;
 
             case 5:
-                objeto = new Consumibles(idObjeto, "Galleta", "");
+                objeto = new Galleta(idObjeto, "Galleta", "", 1, 1, 1, 1);
                 break;
 
             // Objetos Equipables 20 - 39

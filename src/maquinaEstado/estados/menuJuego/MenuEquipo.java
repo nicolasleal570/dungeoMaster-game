@@ -85,9 +85,9 @@ public class MenuEquipo extends SeccionMenu {
             final int lado = Constantes.LADO_SPRITE;
 
             int idActual = ElementosPrincipales.inventario.getArmas().get(i).getId();
+            Objeto objActual = ElementosPrincipales.inventario.getObjeto(idActual);
 
-            ElementosPrincipales.inventario.getObjeto(idActual)
-                    .setPosicionMenu(new Rectangle(puntoInicial.x + i * (lado + margenGeneral), puntoInicial.y, lado, lado));
+            objActual.setPosicionMenu(new Rectangle(puntoInicial.x + i * (lado + margenGeneral), puntoInicial.y, lado, lado));
 
         }
 
@@ -123,6 +123,7 @@ public class MenuEquipo extends SeccionMenu {
 
         } else if (posicionRaton.intersects(EscaladorElementos.escalarRectanguloArriba(this.panelEquipo))) { // Cuando se va a equipar un arma
 
+            // Poniendo el arma en la ranura de los equipados
             if (this.objetoSeleccionado != null && this.objetoSeleccionado instanceof Arma
                     && GestorPrincipal.sd.getRaton().isClickIzquierdo()
                     && posicionRaton.intersects(EscaladorElementos.escalarRectanguloArriba(contenedorArma))) {
@@ -213,7 +214,6 @@ public class MenuEquipo extends SeccionMenu {
         Iterator<Objeto> iterador = ElementosPrincipales.inventario.getArmas().iterator();
 
         while (iterador.hasNext()) {
-
             Objeto objActual = iterador.next();
 
             if (objActual.getCantidad() > 0) {
@@ -270,6 +270,7 @@ public class MenuEquipo extends SeccionMenu {
 
         g.setFont(g.getFont().deriveFont(12f));
 
+        // Dibuja al objeto enxima del puntero del mouse
         if (this.objetoSeleccionado != null) {
 
             DibujoDebug.dibujarImagen(g, this.objetoSeleccionado.getSprite().getImagen(),
