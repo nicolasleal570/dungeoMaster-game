@@ -1418,13 +1418,13 @@
  [
  	{
  		"id": 0,
- 		"cantidad": 1,
+ 		"cantidad": 3,
  		"x": 700,
  		"y": 640
  	},
         {
  		"id": 1,
- 		"cantidad": 1,
+ 		"cantidad": 2,
  		"x": 732,
  		"y": 640
  	},

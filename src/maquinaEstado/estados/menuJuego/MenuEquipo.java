@@ -322,7 +322,7 @@ public class MenuEquipo extends SeccionMenu {
         g.setColor(new Color(23, 23, 23));
         DibujoDebug.dibujarString(g, "Arma", new Point(
                 etiquetaArma.x + etiquetaArma.width / 2 - MedidorStrings.medirAnchoPixeles(g, "Arma") / 2,
-                etiquetaArma.y + etiquetaArma.height - MedidorStrings.medirAnchoPixeles(g, "Arma") / 2));
+                etiquetaArma.y + etiquetaArma.height - MedidorStrings.medirAltoPixeles(g, "Arma") / 2 - 5));
 
         //dibujar todos los objetos equipados
     }

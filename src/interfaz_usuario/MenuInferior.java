@@ -74,13 +74,27 @@ public class MenuInferior {
 
         final int puntoX = areaInventario.x + 35;
 
-        DibujoDebug.dibujarRectanguloRelleno(g, puntoX, areaInventario.y + medidaVertical * 4, ancho, medidaVertical, new Color(0x007ACC));
+        if (ancho >= 100) {
 
-        DibujoDebug.dibujarRectanguloRelleno(g, puntoX, areaInventario.y + medidaVertical * 5, ancho, medidaVertical, new Color(0x005188));
+            DibujoDebug.dibujarRectanguloRelleno(g, puntoX, areaInventario.y + medidaVertical * 4, 100, medidaVertical, new Color(0x007ACC));
 
-        g.setColor(Color.WHITE);
-        DibujoDebug.dibujarString(g, "fuer", areaInventario.x + 10, areaInventario.y + medidaVertical * 6);
-        DibujoDebug.dibujarString(g, fuerza + "%", anchoTotal + 45, areaInventario.y + medidaVertical * 6);
+            DibujoDebug.dibujarRectanguloRelleno(g, puntoX, areaInventario.y + medidaVertical * 5, 100, medidaVertical, new Color(0x005188));
+
+            g.setColor(Color.WHITE);
+            DibujoDebug.dibujarString(g, "fuer", areaInventario.x + 10, areaInventario.y + medidaVertical * 6);
+            DibujoDebug.dibujarString(g, fuerza + " pts", anchoTotal + 45, areaInventario.y + medidaVertical * 6);
+
+        } else if (ancho < 100) {
+
+            DibujoDebug.dibujarRectanguloRelleno(g, puntoX, areaInventario.y + medidaVertical * 4, ancho, medidaVertical, new Color(0x007ACC));
+
+            DibujoDebug.dibujarRectanguloRelleno(g, puntoX, areaInventario.y + medidaVertical * 5, ancho, medidaVertical, new Color(0x005188));
+
+            g.setColor(Color.WHITE);
+            DibujoDebug.dibujarString(g, "fuer", areaInventario.x + 10, areaInventario.y + medidaVertical * 6);
+            DibujoDebug.dibujarString(g, fuerza + " pts", anchoTotal + 45, areaInventario.y + medidaVertical * 6);
+
+        }
 
     }
 
@@ -117,7 +131,7 @@ public class MenuInferior {
 
             g.setColor(Color.WHITE);
 
-            DibujoDebug.dibujarString(g, exp + "", anchoTotal + 45, areaInventario.y + medidaVertical * 12);
+            DibujoDebug.dibujarString(g, exp + " pts", anchoTotal + 45, areaInventario.y + medidaVertical * 12);
 
             DibujoDebug.dibujarString(g, "XP", areaInventario.x + 10, areaInventario.y + medidaVertical * 12);
 
@@ -131,7 +145,7 @@ public class MenuInferior {
 
             g.setColor(Color.WHITE);
 
-            DibujoDebug.dibujarString(g, exp + "", anchoTotal + 45, areaInventario.y + medidaVertical * 12);
+            DibujoDebug.dibujarString(g, exp + " pts", anchoTotal + 45, areaInventario.y + medidaVertical * 12);
 
             DibujoDebug.dibujarString(g, "XP", areaInventario.x + 10, areaInventario.y + medidaVertical * 12);
         }

@@ -691,9 +691,6 @@ public class MapaTiled {
 
     public void sumarRonda() {
         this.numeroRonda += 1;
-
-        System.out.println("Sumando ronda " + this.numeroRonda);
-
     }
 
     public void perderVidaJugador(Enemigo enemigo) {
@@ -738,12 +735,12 @@ public class MapaTiled {
         int cantidad = 0;
 
         // Haciendo la probabilidad de que te salga un obj equipable o consumible
-        if (probabilidad >= 0 || probabilidad <= 7) {
+        if (probabilidad >= 0 || probabilidad <= 5) {
 
             idObjeto = consumibles;
             cantidad = 1 + this.random.nextInt(3);
 
-        } else if (probabilidad > 7 || probabilidad <= 10) {
+        } else if (probabilidad > 5 || probabilidad <= 10) {
 
             idObjeto = equipables;
             cantidad = 1;

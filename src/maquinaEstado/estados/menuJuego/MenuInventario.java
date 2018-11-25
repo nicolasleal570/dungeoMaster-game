@@ -5,7 +5,6 @@ import herramientas.DibujoDebug;
 import herramientas.ElementosPrincipales;
 import herramientas.MedidorStrings;
 import inventario.Objeto;
-import inventario.RegistroObjetos;
 import inventario.consumibles.Consumibles;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -18,20 +17,40 @@ import principal.herramientas.EscaladorElementos;
 
 public class MenuInventario extends SeccionMenu {
 
-    private final EstructuraMenu estructuraMenu;
-
+    //Panel de los objetos
     final Rectangle panelObjetos = new Rectangle(em.fondo.x + margenGeneral,
             em.fondo.y + margenGeneral,
-            em.fondo.width - margenGeneral * 2, em.fondo.height - margenGeneral * 2);
+            248, em.fondo.height - margenGeneral * 2);
 
     final Rectangle tituloPanelObjetos = new Rectangle(panelObjetos.x, panelObjetos.y, panelObjetos.width, 24);
+
+    // Panel del equipo
+    final Rectangle panelEquipo = new Rectangle(panelObjetos.x + panelObjetos.width + margenGeneral,
+            panelObjetos.y, 88, panelObjetos.height);
+
+    final Rectangle tituloPanelEquipo = new Rectangle(panelEquipo.x, panelEquipo.y, panelEquipo.width, 24);
+
+    // Panel de los atributos
+    final Rectangle panelAtributos = new Rectangle(panelEquipo.x + panelEquipo.width + margenGeneral,
+            panelEquipo.y, 132, panelEquipo.height);
+
+    final Rectangle tituloPanelAtributos = new Rectangle(panelAtributos.x, panelAtributos.y, panelAtributos.width, 24);
+
+    // Ranura donde se coloca el objeto
+    final Rectangle etiquetaConsumible = new Rectangle(tituloPanelEquipo.x + margenGeneral,
+            tituloPanelEquipo.y + tituloPanelEquipo.height + margenGeneral,
+            tituloPanelEquipo.width - margenGeneral * 2,
+            margenGeneral * 2 + MedidorStrings.medirAltoPixeles(GestorPrincipal.sd.getGraphics(), "Consumible"));
+
+    final Rectangle contenedorConsumible = new Rectangle(etiquetaConsumible.x + 1,
+            etiquetaConsumible.y + etiquetaConsumible.height,
+            etiquetaConsumible.width - 2, Constantes.LADO_SPRITE);
 
     // Objeto que se seleciona para equipar
     Objeto objetoSeleccionado = null;
 
     public MenuInventario(String nombreSeccion, Rectangle etiquetaMenu, EstructuraMenu em) {
         super(nombreSeccion, etiquetaMenu, em);
-        this.estructuraMenu = em;
 
     }
 
@@ -39,8 +58,11 @@ public class MenuInventario extends SeccionMenu {
     public void actualizar() {
 
         this.actualizarPosicionesMenu();
+
         this.actualizarSeleccionRaton();
+
         this.actualizarObjetoSeleccionado();
+
     }
 
     private void actualizarPosicionesMenu() {
@@ -77,7 +99,8 @@ public class MenuInventario extends SeccionMenu {
 
             for (Objeto obj : ElementosPrincipales.inventario.getConsumibles()) {
 
-                if (this.clickIzquierdoObjeto(obj)) {
+                if (GestorPrincipal.sd.getRaton().isClickIzquierdo()
+                        && posicionRaton.intersects(EscaladorElementos.escalarRectanguloArriba(obj.getPosicionMenu()))) {
 
                     if (obj.getCantidad() > 0) {
 
@@ -92,59 +115,48 @@ public class MenuInventario extends SeccionMenu {
 
             }
 
-        }
+        } else if (posicionRaton.intersects(EscaladorElementos.escalarRectanguloArriba(this.panelEquipo))) { // Cuando se va a equipar un Consumible
 
-        if (this.objetoSeleccionado != null) {
+            // Poniendo el Consumible en la ranura de los equipados
+            if (this.objetoSeleccionado != null && this.objetoSeleccionado instanceof Consumibles
+                    && GestorPrincipal.sd.getRaton().isClickIzquierdo()
+                    && posicionRaton.intersects(EscaladorElementos.escalarRectanguloArriba(contenedorConsumible))) {
 
-            System.out.println("Objeto Seleccionado: " + this.objetoSeleccionado.getNombre());
+                //Equipando el Consumible
+                ElementosPrincipales.jugador.getAlmacenEquipo().cambiarConsumible((Consumibles) this.objetoSeleccionado);
+
+                ElementosPrincipales.jugador.getAlmacenEquipo().consumir(); // Consumiendo la pocion
+
+                this.objetoSeleccionado.setCantidad(this.objetoSeleccionado.getCantidad() - 1);
+                this.objetoSeleccionado = null;
+
+            }
+
+        } else if (posicionRaton.intersects(EscaladorElementos.escalarRectanguloArriba(this.panelAtributos))) {
+
         }
 
     }
 
     private void actualizarObjetoSeleccionado() {
 
-        if (this.objetoSeleccionado != null) {
+        Rectangle posicionRatonR = GestorPrincipal.sd.getRaton().getRectanguloPosicion();
 
-            this.setPocionFuerzaJugador();
-            this.setPocionDefensaJugador();
-            this.setPocionVidaJugador();
-            this.objetoSeleccionado = null;
-            return;
+        if (GestorPrincipal.sd.getRaton().isClickDerecho()
+                && posicionRatonR.intersects(EscaladorElementos.escalarRectanguloArriba(this.contenedorConsumible))) {
 
         }
 
-    }
+        if (this.objetoSeleccionado != null) {
 
-    private void setPocionFuerzaJugador() {
+            if (GestorPrincipal.sd.getRaton().isClickDerecho()) {
+                this.objetoSeleccionado = null;
+                return;
+            }
 
-        Consumibles consumible = (Consumibles) RegistroObjetos.getObjeto(this.objetoSeleccionado.getId());
+            Point posicionRaton = EscaladorElementos.escalarPuntoAbajo(GestorPrincipal.sd.getRaton().getPosicion());
 
-        ElementosPrincipales.jugador.setFuerza(ElementosPrincipales.jugador.getFuerza() + consumible.getFuerzaExtra());
-        this.objetoSeleccionado.setCantidad(this.objetoSeleccionado.getCantidad() - 1);
-
-    }
-
-    private void setPocionDefensaJugador() {
-
-        Consumibles consumible = (Consumibles) RegistroObjetos.getObjeto(this.objetoSeleccionado.getId());
-
-        ElementosPrincipales.jugador.setDefensaActual(ElementosPrincipales.jugador.getDefensaActual() + consumible.getDefensaExtra());
-        this.objetoSeleccionado.setCantidad(this.objetoSeleccionado.getCantidad() - 1);
-
-    }
-
-    private void setPocionVidaJugador() {
-
-        Consumibles consumible = (Consumibles) RegistroObjetos.getObjeto(this.objetoSeleccionado.getId());
-
-        if (ElementosPrincipales.jugador.getVidaActual() >= 100) {
-
-            ElementosPrincipales.jugador.setVidaActual(100);
-
-        } else if (ElementosPrincipales.jugador.getVidaActual() < 100) {
-
-            ElementosPrincipales.jugador.setVidaActual(ElementosPrincipales.jugador.getVidaActual() + consumible.getVidaExtra());
-            this.objetoSeleccionado.setCantidad(this.objetoSeleccionado.getCantidad() - 1);
+            this.objetoSeleccionado.setPosicionFlotante(new Rectangle(posicionRaton.x, posicionRaton.y, Constantes.LADO_SPRITE, Constantes.LADO_SPRITE));
 
         }
 
@@ -154,14 +166,6 @@ public class MenuInventario extends SeccionMenu {
     public void dibujar(Graphics g, SuperficieDibujo sd, EstructuraMenu em) {
 
         this.dibujarPaneles(g);
-        //dibujarObjetosConsumibles(g, em);
-
-    }
-
-    private void dibujarPaneles(final Graphics g) {
-
-        //Dibuja los consumibles
-        dibujarPanelObjetos(g, this.panelObjetos, this.tituloPanelObjetos, "Consumibles");
 
     }
 
@@ -181,15 +185,20 @@ public class MenuInventario extends SeccionMenu {
 
     }
 
-    private void dibujarPanelObjetos(final Graphics g, final Rectangle panel, final Rectangle tituloPanel, final String nombrePanel) {
+    private void dibujarPaneles(final Graphics g) {
 
-        dibujarPanel(g, panel, tituloPanel, nombrePanel);
+        //Dibuja los equipables
+        dibujarPanelObjetos(g, this.panelObjetos, this.tituloPanelObjetos, "Consumibles");
 
-        //dibujar todos los objetos consumibles
-        this.dibujarObjetosConsumibles(g, panel, tituloPanel);
+        // dibuja las Consumibles equipadas
+        dibujarPanelEquipo(g, this.panelEquipo, this.tituloPanelEquipo, "Para consumir");
+
+        // dibuja los atributos
+        dibujarPanelAtributos(g, this.panelAtributos, this.tituloPanelAtributos, "Atributos");
+
     }
 
-    private void dibujarObjetosConsumibles(final Graphics g, final Rectangle panelObjetos, final Rectangle tituloPanel) {
+    private void dibujarObjetosEquipables(final Graphics g, final Rectangle panelObjetos, final Rectangle tituloPanel) {
 
         if (ElementosPrincipales.inventario.getConsumibles().isEmpty()) {
             return;
@@ -207,10 +216,6 @@ public class MenuInventario extends SeccionMenu {
 
                 DibujoDebug.dibujarImagen(g, objActual.getSprite().getImagen(),
                         objActual.getPosicionMenu().x, objActual.getPosicionMenu().y);
-
-                DibujoDebug.dibujarRectanguloContorno(g, objActual.getPosicionMenu().x, objActual.getPosicionMenu().y,
-                        objActual.getPosicionFlotante().width + lado,
-                        objActual.getPosicionFlotante().height + lado, Color.red);
 
             } else if (objActual.getCantidad() <= 0) {
 
@@ -262,13 +267,67 @@ public class MenuInventario extends SeccionMenu {
         g.setFont(g.getFont().deriveFont(12f));
 
         // Dibuja al objeto enxima del puntero del mouse
-        /*if (this.objetoSeleccionado != null) {
+        if (this.objetoSeleccionado != null) {
 
             DibujoDebug.dibujarImagen(g, this.objetoSeleccionado.getSprite().getImagen(),
                     new Point(this.objetoSeleccionado.getPosicionFlotante().x,
                             this.objetoSeleccionado.getPosicionFlotante().y));
 
-        }*/
+        }
+
+    }
+
+    private void dibujarPanelObjetos(final Graphics g, final Rectangle panel, final Rectangle tituloPanel, final String nombrePanel) {
+
+        dibujarPanel(g, panel, tituloPanel, nombrePanel);
+
+        //dibujar todos los objetos equipables
+        this.dibujarObjetosEquipables(g, panel, tituloPanel);
+    }
+
+    private void dibujarPanelEquipo(final Graphics g, final Rectangle panel, final Rectangle tituloPanel, final String nombrePanel) {
+
+        dibujarPanel(g, panel, tituloPanel, nombrePanel);
+
+        //Ranura de los equipables
+        g.setColor(new Color(0xededed));
+        DibujoDebug.dibujarRectanguloRelleno(g, etiquetaConsumible);
+        DibujoDebug.dibujarRectanguloContorno(g, this.contenedorConsumible);
+
+        Point coordenadaImagen = new Point(contenedorConsumible.x + contenedorConsumible.width / 2 - Constantes.LADO_SPRITE / 2,
+                contenedorConsumible.y);
+
+        // Dibujo del objeto equipado
+        Rectangle posicionRaton = GestorPrincipal.sd.getRaton().getRectanguloPosicion();
+
+        if (GestorPrincipal.sd.getRaton().isClickDerecho()
+                && posicionRaton.intersects(EscaladorElementos.escalarRectanguloArriba(this.contenedorConsumible))) {
+
+            ElementosPrincipales.jugador.getAlmacenEquipo().cambiarConsumible(null);
+
+        } else {
+
+            if (ElementosPrincipales.jugador.getAlmacenEquipo().getConsumible() != null) {
+
+                DibujoDebug.dibujarImagen(g, ElementosPrincipales.jugador.getAlmacenEquipo().getConsumible().getSprite().getImagen(), coordenadaImagen);
+
+            }
+
+        }
+
+        g.setColor(new Color(23, 23, 23));
+        DibujoDebug.dibujarString(g, "Consumir", new Point(
+                etiquetaConsumible.x + etiquetaConsumible.width / 2 - MedidorStrings.medirAnchoPixeles(g, "Consumir") / 2,
+                etiquetaConsumible.y + etiquetaConsumible.height - MedidorStrings.medirAltoPixeles(g, "Consumir") / 2 - 5));
+
+        //dibujar todos los objetos equipados
+    }
+
+    private void dibujarPanelAtributos(final Graphics g, final Rectangle panel, final Rectangle tituloPanel, final String nombrePanel) {
+
+        dibujarPanel(g, panel, tituloPanel, nombrePanel);
+
+        //dibujar todos los atributos del objeto
     }
 
     private boolean clickIzquierdoObjeto(Objeto objeto) {

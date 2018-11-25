@@ -2,6 +2,7 @@ package inventario.equipables;
 
 import entes.Jugador;
 import entes.enemigos.Enemigo;
+import herramientas.ElementosPrincipales;
 import inventario.Objeto;
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -57,6 +58,10 @@ public abstract class Arma extends Objeto {
         double ataqueActual = this.getAtaqueMedio();
 
         for (Enemigo enemigo : enemigos) {
+
+            if (ElementosPrincipales.jugador.getAlmacenEquipo().getArma1() instanceof Desarmado) {
+                ataqueActual += (ElementosPrincipales.jugador.getFuerza() / 100);
+            }
 
             enemigo.perderVidaEnemigo(ataqueActual);
 
