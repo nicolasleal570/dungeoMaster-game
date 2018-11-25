@@ -49,18 +49,25 @@ public abstract class Arma extends Objeto {
         if (this.actualizacionParaSiguienteAtaque > 0) {
             return;
         }
+
         this.actualizacionParaSiguienteAtaque = (int) (this.ataquePorSegundo * 60); // Fijando las actualizacion cada 1 segundo
 
         if (enemigos.isEmpty()) {
             return;
         }
 
-        double ataqueActual = this.getAtaqueMedio();
+        double ataqueActual = 0;
 
         for (Enemigo enemigo : enemigos) {
 
             if (ElementosPrincipales.jugador.getAlmacenEquipo().getArma1() instanceof Desarmado) {
-                ataqueActual += (ElementosPrincipales.jugador.getFuerza() / 100);
+
+                ataqueActual = this.getAtaqueMedio() + ElementosPrincipales.jugador.getFuerza() / 50;
+
+            } else {
+
+                ataqueActual = this.getAtaqueMedio();
+
             }
 
             enemigo.perderVidaEnemigo(ataqueActual);

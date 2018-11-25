@@ -18,7 +18,7 @@ import sprites.HojaSprites;
 
 public class Jugador {
 
-    private String nombre;
+    private String nombre = null;
 
     private double posX, posY;
 
@@ -57,7 +57,16 @@ public class Jugador {
 
     public Jugador() {
 
-        this.nombre = JOptionPane.showInputDialog(null, "Ingrese el nombre del jugador");
+        // Poniendo el nombre del jugador
+        while (this.nombre == null) {
+
+            this.nombre = JOptionPane.showInputDialog(null, "Ingrese el nombre del jugador");
+
+            if (this.nombre != null) {
+                break;
+            }
+
+        }
 
         this.posX = ElementosPrincipales.mapa.getPosicionInicial().x;
         this.posY = ElementosPrincipales.mapa.getPosicionInicial().y;
@@ -647,6 +656,25 @@ public class Jugador {
 
     public void setEnemigosMuertos(int enemigosMuertos) {
         this.enemigosMuertos = enemigosMuertos;
+    }
+
+    public void perderVidaJugador(double ataqueRecibido) {
+
+        if (this.defensaActual > 0) {
+
+            this.defensaActual -= ataqueRecibido;
+
+        } else if (this.defensaActual - ataqueRecibido <= 0) {
+
+            this.defensaActual = 0;
+            this.vidaActual -= ataqueRecibido;
+
+        } else if (this.vidaActual - ataqueRecibido <= 0) {
+
+            vidaActual = 0;
+
+        }
+
     }
 
 }

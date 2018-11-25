@@ -56,19 +56,19 @@ public class RegistroObjetos {
                 break;
 
             case 21:
-                objeto = new Escopeta(idObjeto, "Escopeta", "", 10, 12, false, true, 0.6);
+                objeto = new Escopeta(idObjeto, "Escopeta", "", 25, 30, false, true, 0.2);
                 break;
 
             case 22:
-                objeto = new RifleTipo1(idObjeto, "Rifle Tipo 1", "", 7, 9, false, true, 0.2);
+                objeto = new RifleTipo1(idObjeto, "M4", "", 7, 9, false, true, 0.25);
                 break;
 
             case 23:
-                objeto = new RifleTipo2(idObjeto, "Rifle Tipo 2", "", 5, 10, false, true, 0.2);
+                objeto = new RifleTipo2(idObjeto, "AK-47", "", 5, 10, false, true, 0.25);
                 break;
 
             case 24:
-                objeto = new Desarmado(idObjeto, "Puño Americano", "", 3, 5, false, true, 0.6);
+                objeto = new Desarmado(idObjeto, "Puño Americano", "", 3, 5, false, true, 0.5);
                 break;
         }
 

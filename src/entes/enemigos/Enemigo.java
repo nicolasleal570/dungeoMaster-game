@@ -10,32 +10,40 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.Random;
 import principal.Constantes;
 
 public abstract class Enemigo {
 
-    private int idEnemigo;
+    protected int idEnemigo;
 
-    private double posicionX;
-    private double posicionY;
+    protected double posicionX;
+    protected double posicionY;
 
-    private double velocidad;
+    protected double velocidad;
 
-    private String nombre;
+    protected String nombre;
 
-    private int vidaMaxima;
-    private float vidaActual;
+    protected int vidaMaxima;
+    protected float vidaActual;
 
-    private int fuerza;
+    protected int fuerza;
 
-    private int defensaMaxima;
-    private float defensaActual;
+    protected int defensaMaxima;
+    protected float defensaActual;
 
-    private int nivel;
+    protected int ataqueMinimo;
+    protected int ataqueMaximo;
 
-    private Nodo siguienteNodo;
+    protected double ataquePorSegundo; // Cadencia de ataque
+    protected int actualizacionParaSiguienteAtaque; // Cuantas actualizaciones deben pasar entre un disparo y otro
 
-    public Enemigo(int idEnemigo, String nombre, int vidaMaxima, int fuerza, int defensaMaxima, int nivel) {
+    protected int nivel;
+
+    protected Nodo siguienteNodo;
+
+    public Enemigo(int idEnemigo, String nombre, int vidaMaxima, int ataqueMinimo, int ataqueMaximo, int defensaMaxima, int nivel,
+            final double ataquePorSegundo) {
 
         this.idEnemigo = idEnemigo;
         this.nombre = nombre;
@@ -46,17 +54,24 @@ public abstract class Enemigo {
         this.defensaMaxima = defensaMaxima;
         this.defensaActual = defensaMaxima;
 
-        this.fuerza = fuerza;
+        this.ataqueMinimo = ataqueMinimo;
+        this.ataqueMaximo = ataqueMaximo;
+        this.ataquePorSegundo = ataquePorSegundo;
+        this.actualizacionParaSiguienteAtaque = 0;
 
         this.nivel = nivel;
 
         this.posicionX = 0;
         this.posicionY = 0;
 
-        this.velocidad = 0.5;
+        this.velocidad = 0.6;
     }
 
     public void actualizar(ArrayList<Enemigo> enemigos) {
+
+        if (this.actualizacionParaSiguienteAtaque > 0) {
+            this.actualizacionParaSiguienteAtaque--;
+        }
 
         this.moverHaciaSiguienteNodo(enemigos);
 
@@ -158,22 +173,28 @@ public abstract class Enemigo {
 
     public void perderVidaEnemigo(double ataqueRecibido) {
 
-        if (this.vidaActual - ataqueRecibido < 0) {
+        if (this.defensaActual > 0) {
+
+            this.defensaActual -= ataqueRecibido;
+
+        } else if (this.defensaActual <= 0) {
+
+            this.defensaActual = 0;
+            this.vidaActual -= ataqueRecibido;
+
+        } else if (this.vidaActual - ataqueRecibido <= 0) {
+
             vidaActual = 0;
 
-        } else {
-
-            if (this.defensaActual > 0) {
-
-                this.defensaActual -= ataqueRecibido;
-            }
-
-            if (this.defensaActual <= 0) {
-
-                this.vidaActual -= ataqueRecibido;
-
-            }
         }
+
+    }
+
+    public int getAtaqueMedio() {
+
+        Random r = new Random();
+
+        return r.nextInt(this.ataqueMaximo - this.ataqueMinimo) + this.ataqueMaximo;
 
     }
 
@@ -284,6 +305,22 @@ public abstract class Enemigo {
         }
 
         return chocando;
+
+    }
+
+    public void atacar(Jugador jugador) {
+
+        if (this.actualizacionParaSiguienteAtaque > 0) {
+            return;
+        }
+
+        this.actualizacionParaSiguienteAtaque = (int) (this.ataquePorSegundo * 30); // Fijando las actualizacion cada 1 segundo
+
+        double ataqueActual = 0;
+
+        ataqueActual = this.getAtaqueMedio();
+
+        jugador.perderVidaJugador(ataqueActual);
 
     }
 

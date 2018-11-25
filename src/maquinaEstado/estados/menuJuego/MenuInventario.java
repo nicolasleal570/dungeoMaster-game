@@ -193,12 +193,12 @@ public class MenuInventario extends SeccionMenu {
         // dibuja las Consumibles equipadas
         dibujarPanelEquipo(g, this.panelEquipo, this.tituloPanelEquipo, "Para consumir");
 
-        // dibuja los atributos
-        dibujarPanelAtributos(g, this.panelAtributos, this.tituloPanelAtributos, "Atributos");
+        // dibuja los Controles del inventario
+        dibujarPanelControles(g, this.panelAtributos, this.tituloPanelAtributos, "Controles");
 
     }
 
-    private void dibujarObjetosEquipables(final Graphics g, final Rectangle panelObjetos, final Rectangle tituloPanel) {
+    private void dibujarObjetosEquipables(final Graphics g, final Rectangle tituloPanel) {
 
         if (ElementosPrincipales.inventario.getConsumibles().isEmpty()) {
             return;
@@ -282,7 +282,7 @@ public class MenuInventario extends SeccionMenu {
         dibujarPanel(g, panel, tituloPanel, nombrePanel);
 
         //dibujar todos los objetos equipables
-        this.dibujarObjetosEquipables(g, panel, tituloPanel);
+        this.dibujarObjetosEquipables(g, tituloPanel);
     }
 
     private void dibujarPanelEquipo(final Graphics g, final Rectangle panel, final Rectangle tituloPanel, final String nombrePanel) {
@@ -323,40 +323,39 @@ public class MenuInventario extends SeccionMenu {
         //dibujar todos los objetos equipados
     }
 
-    private void dibujarPanelAtributos(final Graphics g, final Rectangle panel, final Rectangle tituloPanel, final String nombrePanel) {
+    private void dibujarPanelControles(final Graphics g, final Rectangle panel, final Rectangle tituloPanel, final String nombrePanel) {
 
         dibujarPanel(g, panel, tituloPanel, nombrePanel);
-
-        //dibujar todos los atributos del objeto
-    }
-
-    private boolean clickIzquierdoObjeto(Objeto objeto) {
-
-        Rectangle posicionRaton = GestorPrincipal.sd.getRaton().getRectanguloPosicion();
-
-        if (posicionRaton.intersects(EscaladorElementos.escalarRectanguloArriba(objeto.getPosicionMenu()))
-                && GestorPrincipal.sd.getRaton().isClickIzquierdo()) {
-
-            return true;
-
-        }
-
-        return false;
+        dibujarStringClickIzquierdo(g, panel, tituloPanel);
+        dibujarStringClickDerecho(g, panel, tituloPanel);
 
     }
 
-    private boolean clickDerechoObjeto(Objeto objeto) {
+    private void dibujarStringClickIzquierdo(final Graphics g, final Rectangle panel, final Rectangle tituloPanel) {
 
-        Rectangle posicionRaton = GestorPrincipal.sd.getRaton().getRectanguloPosicion();
+        String control = "Click Izquierdo: ";
+        String funcion = "Escoger Objeto";
 
-        if (posicionRaton.intersects(EscaladorElementos.escalarRectanguloArriba(objeto.getPosicionMenu()))
-                && GestorPrincipal.sd.getRaton().isClickDerecho()) {
+        g.setFont(g.getFont().deriveFont(9f));
+        DibujoDebug.dibujarString(g, control,
+                panel.x + 2, panel.y + tituloPanel.height + MedidorStrings.medirAltoPixeles(g, control));
 
-            return true;
+        DibujoDebug.dibujarString(g, funcion,
+                panel.x + 15, panel.y + tituloPanel.height + MedidorStrings.medirAltoPixeles(g, funcion) * 2);
 
-        }
+    }
 
-        return false;
+    private void dibujarStringClickDerecho(final Graphics g, final Rectangle panel, final Rectangle tituloPanel) {
+
+        String control = "Click Derecho: ";
+        String funcion = "Eliminar Seleccion";
+
+        g.setFont(g.getFont().deriveFont(9f));
+        DibujoDebug.dibujarString(g, control,
+                panel.x + 2, panel.y + tituloPanel.height + MedidorStrings.medirAltoPixeles(g, control) * 4);
+
+        DibujoDebug.dibujarString(g, funcion,
+                panel.x + 15, panel.y + tituloPanel.height + MedidorStrings.medirAltoPixeles(g, funcion) * 5);
 
     }
 

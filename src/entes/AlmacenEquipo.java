@@ -51,11 +51,7 @@ public class AlmacenEquipo {
             float vida = this.consumible.getVidaExtra() + ElementosPrincipales.jugador.getVidaActual();
 
             /* VALIDANDO LA DEFENSA */
-            if (ElementosPrincipales.jugador.getDefensaActual() <= 0) {
-
-                ElementosPrincipales.jugador.setDefensaActual(0);
-
-            } else if (ElementosPrincipales.jugador.getDefensaActual() < 100) {
+            if (ElementosPrincipales.jugador.getDefensaActual() < 100) {
 
                 ElementosPrincipales.jugador.setDefensaActual(defensa);
 
@@ -69,9 +65,7 @@ public class AlmacenEquipo {
             ElementosPrincipales.jugador.setFuerza(fuerza);
 
             /* VALIDANDO LA VIDA */
-            if (ElementosPrincipales.jugador.getVidaActual() <= 0) {
-                ElementosPrincipales.jugador.setVidaActual(0);
-            } else if (ElementosPrincipales.jugador.getVidaActual() < 100) {
+            if (ElementosPrincipales.jugador.getVidaActual() < 100) {
 
                 ElementosPrincipales.jugador.setVidaActual(vida);
 

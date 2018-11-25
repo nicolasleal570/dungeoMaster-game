@@ -53,7 +53,6 @@ public class MapaTiled {
     public MapaTiled(String ruta) {
 
         String contenido = CargadorRecursos.leerArchivoTexto(ruta); // Archivo JSON
-
         JSONObject globalJson = this.getObjetoJson(contenido);
 
         // Ancho y alto del mapa en Tiles
@@ -272,6 +271,8 @@ public class MapaTiled {
         actualizarAtaques();
         actualizarNivelJugador();
 
+        System.out.println("Defensa Jugador: " + ElementosPrincipales.jugador.getDefensaActual());
+
         Point punto = new Point(ElementosPrincipales.jugador.getPosXInt(),
                 ElementosPrincipales.jugador.getPosYInt());
         Point puntoCoincidente = d.getCoordenadasNodoCoincidente(punto);
@@ -281,10 +282,6 @@ public class MapaTiled {
 
     private void actualizarAtaques() {
 
-        /*if (this.enemigosMapa.isEmpty() || ElementosPrincipales.jugador.getAlcanceActual().isEmpty()
-                || ElementosPrincipales.jugador.getAlmacenEquipo().getArma1() instanceof Desarmado) { // No permite tener al jugador desarmado
-            return;
-        }*/
         if (this.enemigosMapa.isEmpty()) { // No permite tener al jugador desarmado
             return;
         }
@@ -360,11 +357,6 @@ public class MapaTiled {
 
                 this.actualizandoParametrosJugador(enemigo); // Actualizando todos los parametros del jugador segun vaya avanzando
 
-                /*for (int i = 0; i < this.crearDrops(enemigo).size(); i++) {
-                    
-                    this.objetosMapa.add(this.crearDrops(enemigo).get(i));
-                    
-                }*/
                 this.objetosMapa.add(this.crearDrops(enemigo));
                 iterador.remove(); // eliminando enemigos muertos
 
@@ -486,7 +478,8 @@ public class MapaTiled {
                 // Haciendo que el jugador pierda vida cuando choca con un enemigo
                 if (enemigo.jugadorColisionandoContraEnemigo()) {
 
-                    this.perderVidaJugador(enemigo);
+//                    ElementosPrincipales.jugador.perderVidaJugador(enemigo.getAtaqueMedio());
+                    enemigo.atacar(ElementosPrincipales.jugador);
 
                 }
 
@@ -693,36 +686,6 @@ public class MapaTiled {
         this.numeroRonda += 1;
     }
 
-    public void perderVidaJugador(Enemigo enemigo) {
-
-        float defensa = ElementosPrincipales.jugador.getDefensaActual();
-        float vida = ElementosPrincipales.jugador.getVidaActual();
-        int aleatorio = 1 + this.random.nextInt(10);
-
-        float ataqueRecibido = enemigo.getFuerza() / aleatorio;
-
-        if (vida - ataqueRecibido <= 0) {
-
-            ElementosPrincipales.jugador.setVidaActual(0);
-
-        } else {
-
-            if (defensa > 0) {
-
-                ElementosPrincipales.jugador.setDefensaActual(defensa - ataqueRecibido);
-
-            }
-
-            if (defensa - ataqueRecibido <= 0) {
-
-                ElementosPrincipales.jugador.setDefensaActual(0);
-                ElementosPrincipales.jugador.setVidaActual(vida - ataqueRecibido);
-
-            }
-        }
-
-    }
-
     private ObjetoUnicoTiled crearDrops(Enemigo enemigo) {
 
         Point posObjeto = new Point(enemigo.getPosicionXInt(), enemigo.getPosicionYInt()); // Posicion del objeto segun el zombie
@@ -735,12 +698,12 @@ public class MapaTiled {
         int cantidad = 0;
 
         // Haciendo la probabilidad de que te salga un obj equipable o consumible
-        if (probabilidad >= 0 || probabilidad <= 5) {
+        if (probabilidad >= 0 && probabilidad <= 5) {
 
             idObjeto = consumibles;
             cantidad = 1 + this.random.nextInt(3);
 
-        } else if (probabilidad > 5 || probabilidad <= 10) {
+        } else if (probabilidad > 5 && probabilidad <= 10) {
 
             idObjeto = equipables;
             cantidad = 1;

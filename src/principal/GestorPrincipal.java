@@ -3,6 +3,7 @@ package principal;
 import control.GestorControles;
 import graficos.SuperficieDibujo;
 import graficos.Ventana;
+import herramientas.ElementosPrincipales;
 import maquinaEstado.GestorEstados;
 
 public class GestorPrincipal {
@@ -125,6 +126,10 @@ public class GestorPrincipal {
 
             } else {
                 ge.cambiarEstadoActual(1);
+            }
+
+            if (ElementosPrincipales.jugador.getVidaActual() <= 0) {
+                ge.cambiarEstadoActual(3);
             }
 
         }
