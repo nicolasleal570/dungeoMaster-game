@@ -5,6 +5,7 @@ public class Tecla {
     private boolean pulsada = false;
     private long ultimaPulsacion = System.nanoTime();
 
+    // CREA UNA TECLA Y EVALUA LAS PULSACIONES Y SI ESTA PISADA O NO
     public void teclaPulsada() {
 
         this.pulsada = true;

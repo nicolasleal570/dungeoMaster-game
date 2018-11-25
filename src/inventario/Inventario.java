@@ -15,24 +15,7 @@ public class Inventario {
 
     }
 
-    public void recogerContenedorObjetos(final ContenedorObjetos co) {
-
-        for (Objeto objeto : co.getObjetos()) {
-
-            if (this.objetoExiste(objeto)) {
-
-                this.incrementarObjeto(objeto, objeto.getCantidad());
-
-            } else {
-
-                this.objetos.add(objeto);
-
-            }
-
-        }
-
-    }
-
+    // EVALUA CUANDO EL USUARIO VA A RECOGER UN OBJETO
     public void recogerObjeto(final ObjetoUnicoTiled objActual) {
 
         Objeto objeto = objActual.getObjeto();
@@ -53,6 +36,7 @@ public class Inventario {
 
     }
 
+    // VERIFICA SI EL OBJETO EXISTE
     public boolean objetoExiste(Objeto objeto) {
 
         boolean existe = false;
@@ -70,6 +54,7 @@ public class Inventario {
 
     }
 
+    // INCREMENTA EL OBJETO EN EL INVENTARIO
     public boolean incrementarObjeto(final Objeto objeto, final int cantidad) {
 
         boolean incrementado = false;
@@ -123,6 +108,7 @@ public class Inventario {
 
     }
 
+    // GETTER
     public Objeto getObjeto(final int idObj) {
 
         for (Objeto objActual : this.objetos) {

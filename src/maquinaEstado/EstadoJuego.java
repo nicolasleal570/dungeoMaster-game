@@ -4,8 +4,9 @@ import java.awt.Graphics;
 
 public interface EstadoJuego {
 
-    void actualizar();
+    // ACTUALIZA LOS ESTADOS DEL JUEGO
+    public void actualizar();
 
-    void dibujar(final Graphics g);
+    public void dibujar(final Graphics g);
 
 }

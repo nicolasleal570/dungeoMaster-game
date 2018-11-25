@@ -19,6 +19,10 @@ public class RegistroObjetos {
 
     public final static int numObjetosTotales = numObjetosConsumibles + numObjetosEquipables; // Total de objetos disponibles en el juego
 
+    /**
+     * @param idObjeto del objeto
+     * @return de un objeto segun su id
+     */
     public static Objeto getObjeto(final int idObjeto) {
 
         Objeto objeto = null;
@@ -27,48 +31,48 @@ public class RegistroObjetos {
 
             // Objetos consumibles 0 - 19
             case 0:
-                objeto = new PocionDefensa(idObjeto, "Pocion de Defensa", "", 1, 1, 15, 1);
+                objeto = new PocionDefensa(idObjeto, "Pocion de Defensa", 1, 1, 15, 1);
                 break;
 
             case 1:
-                objeto = new PocionFuerza(idObjeto, "Pocion de Fuerza", "", 1, 15, 1, 1);
+                objeto = new PocionFuerza(idObjeto, "Pocion de Fuerza", 1, 15, 1, 1);
                 break;
 
             case 2:
-                objeto = new PocionVida(idObjeto, "Pocion de Vida", "", 1, 5, 5, 15);
+                objeto = new PocionVida(idObjeto, "Pocion de Vida", 1, 5, 5, 15);
                 break;
 
             case 3:
-                objeto = new Manzana(idObjeto, "Manzana", "", 1, 8, 4, 8);
+                objeto = new Manzana(idObjeto, "Manzana", 1, 8, 4, 8);
                 break;
 
             case 4:
-                objeto = new Zanahoria(idObjeto, "Zanahoria", "", 1, 4, 8, 4);
+                objeto = new Zanahoria(idObjeto, "Zanahoria", 1, 4, 8, 4);
                 break;
 
             case 5:
-                objeto = new Galleta(idObjeto, "Galleta", "", 1, 1, 1, 1);
+                objeto = new Galleta(idObjeto, "Galleta", 1, 1, 1, 1);
                 break;
 
             // Objetos Equipables 20 - 39
             case 20:
-                objeto = new Pistola(idObjeto, "Pistola", "", 3, 9, false, true, 0.4);
+                objeto = new Pistola(idObjeto, "Pistola", 3, 9, false, true, 0.4);
                 break;
 
             case 21:
-                objeto = new Escopeta(idObjeto, "Escopeta", "", 25, 30, false, true, 0.2);
+                objeto = new Escopeta(idObjeto, "Escopeta", 25, 30, false, true, 0.2);
                 break;
 
             case 22:
-                objeto = new RifleTipo1(idObjeto, "M4", "", 7, 9, false, true, 0.25);
+                objeto = new RifleTipo1(idObjeto, "M4", 7, 9, false, true, 0.25);
                 break;
 
             case 23:
-                objeto = new RifleTipo2(idObjeto, "AK-47", "", 5, 10, false, true, 0.25);
+                objeto = new RifleTipo2(idObjeto, "AK-47", 5, 10, false, true, 0.25);
                 break;
 
             case 24:
-                objeto = new Desarmado(idObjeto, "Puño Americano", "", 3, 5, false, true, 0.5);
+                objeto = new Desarmado(idObjeto, "Puño Americano", 3, 5, false, true, 0.5);
                 break;
         }
 

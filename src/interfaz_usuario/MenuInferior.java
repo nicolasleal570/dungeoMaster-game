@@ -1,12 +1,12 @@
 package interfaz_usuario;
 
+import herramientas.Constantes;
 import herramientas.DibujoDebug;
 import herramientas.ElementosPrincipales;
 import herramientas.MedidorStrings;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import principal.Constantes;
 import principal.GestorPrincipal;
 
 public class MenuInferior {
@@ -39,8 +39,9 @@ public class MenuInferior {
 
     }
 
+    // DIBUJA LA INTERFAZ DEL JUEGO 
     public void dibujar(final Graphics g) {
-        this.dibujarAreaInventario(g);
+        this.dibujarAreaParametrosJugador(g);
         this.dibujarAreaControles(g);
         this.dibujarBarraVida(g, (int) ElementosPrincipales.jugador.getVidaActual());
         this.dibujarBarraFuerza(g, ElementosPrincipales.jugador.getFuerza());
@@ -48,19 +49,21 @@ public class MenuInferior {
         this.dibujarBarraExp(g, ElementosPrincipales.jugador.getExperiencia());
         this.dibujarNivelJugador(g, ElementosPrincipales.jugador.getNivel());
         this.dibujarOrdaActualZombies(g, ElementosPrincipales.mapa.getNumeroRonda());
-        this.dibujarArmaEquipada(g, "Arma Actual: " + ElementosPrincipales.jugador.getAlmacenEquipo().getArma1().getNombre());
+        this.dibujarArmaEquipada(g, "Arma Actual: " + ElementosPrincipales.jugador.getAlmacenEquipo().getArma().getNombre());
         this.dibujarTiempoJuego(g, "Tiempo de Juego: " + this.calcularTiempo());
 
         this.dibujarControles(g);
 
     }
 
-    private void dibujarAreaInventario(final Graphics g) {
+    // DIBUJA EL AREA DE LA INTERFAZ DEL JUGADOR
+    private void dibujarAreaParametrosJugador(final Graphics g) {
         DibujoDebug.dibujarRectanguloRelleno(g, areaInventario, negroDesaturado);
         DibujoDebug.dibujarRectanguloRelleno(g, bordeAreaInventario, Color.white);
 
     }
 
+    // DIBUJA EL AREA DE CONTROLES DEL JUEGO
     private void dibujarAreaControles(final Graphics g) {
         DibujoDebug.dibujarRectanguloRelleno(g, this.areaControles, negroDesaturado);
         DibujoDebug.dibujarRectanguloContorno(g, this.bordeAreaControles, Color.white);

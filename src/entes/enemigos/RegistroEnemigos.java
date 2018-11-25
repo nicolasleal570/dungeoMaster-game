@@ -4,10 +4,15 @@ import herramientas.ElementosPrincipales;
 
 public class RegistroEnemigos {
 
+    /**
+     *
+     * @param idEnemigo tipo del enemigo
+     */
     public static Enemigo getEnemigo(final int idEnemigo) {
 
         Enemigo enemigo = null;
 
+        // DEVUELVE UN ENEMIGO SEGUN EL TIPO QUE SE LE DE
         switch (idEnemigo) {
 
             case 1:

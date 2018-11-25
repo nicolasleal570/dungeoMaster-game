@@ -14,13 +14,14 @@ public class GestorMenu implements EstadoJuego {
     private final SeccionMenu[] secciones;
     private SeccionMenu seccionActual;
 
+    // GESTIONA AL INVENTARIO PARA QUE SE DIBUJE EN EL CANVAS
     public GestorMenu(final SuperficieDibujo sd) {
 
         this.sd = sd;
 
         this.estructuraMenu = new EstructuraMenu();
 
-        this.secciones = new SeccionMenu[2];
+        this.secciones = new SeccionMenu[2]; // Numero de secciones en el inventario
 
         final Rectangle etiquetaInventario = new Rectangle(estructuraMenu.bannerLateral.x + estructuraMenu.margenHorizontalEtiquetas,
                 estructuraMenu.bannerLateral.y + estructuraMenu.margenVerticalEtiquetas,
@@ -41,6 +42,7 @@ public class GestorMenu implements EstadoJuego {
 
     }
 
+    // ACTUALIZA LAS SECCIONES EN EL INVENTARIO
     @Override
     public void actualizar() {
 
@@ -69,6 +71,7 @@ public class GestorMenu implements EstadoJuego {
 
     }
 
+    // DIBUJA LAS SECCIONES DEL INVENTARIO
     @Override
     public void dibujar(final Graphics g) {
 

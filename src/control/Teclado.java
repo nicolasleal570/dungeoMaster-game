@@ -2,6 +2,7 @@ package control;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -9,6 +10,7 @@ import java.awt.event.KeyListener;
  */
 public class Teclado implements KeyListener {
 
+    // TIPOS DE TECLA
     public Tecla arriba = new Tecla();
     public Tecla abajo = new Tecla();
     public Tecla izquierda = new Tecla();
@@ -20,9 +22,11 @@ public class Teclado implements KeyListener {
 
     public boolean start = false;
 
+    // Se activa cuando se pisa una tecla
     @Override
     public void keyPressed(KeyEvent e) {
 
+        // Switch de todas las teclas del juego para sus diferentes funciones
         switch (e.getKeyCode()) {
 
             case KeyEvent.VK_W:
@@ -55,12 +59,18 @@ public class Teclado implements KeyListener {
                 break;
 
             case KeyEvent.VK_ESCAPE:
-                System.exit(0);
+                int confirm = JOptionPane.showConfirmDialog(null, "Desea cerrar el juego?");
+                if (confirm == 1) {
+                    return;
+                } else if (confirm == 0) {
+                    System.exit(0);
+                }
 
         }
 
     }
 
+    // TECLA LIBERADA
     @Override
     public void keyReleased(KeyEvent e) {
 

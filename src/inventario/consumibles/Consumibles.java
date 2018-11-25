@@ -1,7 +1,7 @@
 package inventario.consumibles;
 
+import herramientas.Constantes;
 import inventario.Objeto;
-import principal.Constantes;
 import sprites.HojaSprites;
 import sprites.Sprite;
 
@@ -13,17 +13,22 @@ public abstract class Consumibles extends Objeto {
 
     public HojaSprites consumibles = new HojaSprites("/recursos/hojaObjetos/consumibles.png", Constantes.LADO_SPRITE, false);
 
-    public Consumibles(int id, String nombre, String descripcion, int cantidad, int fuerzaExtra, int defensaExtra, int vidaExtra) {
-        super(id, nombre, descripcion, cantidad);
+    /**
+     *
+     * @param id del objeto
+     * @param nombre del objeto
+     * @param cantidad del objeto
+     * @param fuerzaExtra fuerza que se va a sumar
+     * @param defensaExtra defensa que se va a sumar
+     * @param vidaExtra vida que se va a sumar
+     */
+    public Consumibles(int id, String nombre, int cantidad, int fuerzaExtra, int defensaExtra, int vidaExtra) {
+        super(id, nombre, cantidad);
 
         this.fuerzaExtra = fuerzaExtra;
         this.defensaExtra = defensaExtra;
         this.vidaExtra = vidaExtra;
 
-    }
-
-    public Consumibles(int id, String nombre, String descripcion) {
-        super(id, nombre, descripcion);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package entes;
 
 import control.GestorControles;
+import herramientas.Constantes;
 import herramientas.DibujoDebug;
 import herramientas.ElementosPrincipales;
 import inventario.RegistroObjetos;
@@ -13,7 +14,6 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import principal.Constantes;
 import sprites.HojaSprites;
 
 public class Jugador {
@@ -94,6 +94,7 @@ public class Jugador {
 
     }
 
+    // ACTUALIZA AL JUGADOR
     public void actualizar() {
         this.cambiarHojaSprite();
         cambiarAnimacionEstado();
@@ -105,37 +106,40 @@ public class Jugador {
 
     }
 
+    // ACTUALIZA LA UTILIZACION DE LAS ARMAS
     private void actualizarArmas() {
 
         /*if (this.ae.getArma1() instanceof Desarmado) { // No ataca sin arma
             return;
         }*/
-        if (this.ae.getArma1() != null) {
+        if (this.ae.getArma() != null) {
             this.calcularAlcanceAtaque();
-            ae.getArma1().actualizar();
+            ae.getArma().actualizar();
         }
 
     }
 
+    // CALCULO DEL ALCANCE DEL ARMA
     private void calcularAlcanceAtaque() {
 
         // Si no tiene pistola
         /*if (this.ae.getArma1() instanceof Desarmado) {
             return;
         }*/
-        if (this.ae.getArma1() != null) {
-            this.alcanceActual = this.ae.getArma1().getAlcance(this);
+        if (this.ae.getArma() != null) {
+            this.alcanceActual = this.ae.getArma().getAlcance(this);
         }
 
     }
 
+    // CAMBIA LA SKIN SI TIENE UN ARMA EQUIPADA
     private void cambiarHojaSprite() {
 
-        if (this.ae.getArma1() != null && !(this.ae.getArma1() instanceof Desarmado)) {
+        if (this.ae.getArma() != null && !(this.ae.getArma() instanceof Desarmado)) {
 
             this.hs = new HojaSprites("/recursos/hojaPersonaje/2_1.png", Constantes.LADO_SPRITE, false);
 
-        } else if (this.ae.getArma1() == null || this.ae.getArma1() instanceof Desarmado) {
+        } else if (this.ae.getArma() == null || this.ae.getArma() instanceof Desarmado) {
 
             this.hs = new HojaSprites("/recursos/hojaPersonaje/2.png", Constantes.LADO_SPRITE, false);
 
@@ -143,6 +147,7 @@ public class Jugador {
 
     }
 
+    // DIBUJA AL JUGADOR 
     public void dibujar(Graphics g) {
 
         final int centroX = Constantes.ANCHO_JUEGO / 2 - Constantes.LADO_SPRITE / 2;
@@ -155,6 +160,7 @@ public class Jugador {
 
     }
 
+    // DIBUJA EL ALCANCE DEL ARMA
     private void dibujarAlcance(Graphics g) {
 
         g.setColor(Color.red);
@@ -162,6 +168,7 @@ public class Jugador {
 
     }
 
+    // DIBUJA EL NOMBRE DEL JUGADOR
     private void dibujarNombre(final Graphics g, final int puntoX, final int puntoY) {
 
         g.setColor(Color.red);
@@ -169,6 +176,7 @@ public class Jugador {
 
     }
 
+    // ANIMA AL JUGADOR
     private void cambiarAnimacionEstado() {
 
         if (this.animacion < 30) {
@@ -185,6 +193,7 @@ public class Jugador {
 
     }
 
+    // DETERMINA SI ESTA VIENDO AL NORTE, SUR, ESTE U OESTE
     private void determinarDireccion() {
 
         final int velX = this.evaluarVelocidadX();
@@ -240,6 +249,7 @@ public class Jugador {
 
     }
 
+    // MUEVE AL JUGADOR
     private void mover(int velocidadX, int velocidadY) {
 
         this.enMovimiento = true;
@@ -272,6 +282,7 @@ public class Jugador {
 
     }
 
+    // CALCULA SI EL JUGADOR VA A SALIR DEL MAPA
     private boolean fueraMapa(final int velocidadX, final int velocidadY) {
 
         int posicionFuturaX = (int) this.posX + velocidadX * (int) this.velocidad;
@@ -295,6 +306,7 @@ public class Jugador {
         return fuera;
     }
 
+    // COLISIONES SUPERIORES
     private boolean enColisionArriba(final int velocidadY) {
 
         for (int r = 0; r < ElementosPrincipales.mapa.areasColisionPorActualizacion.size(); r++) {
@@ -332,6 +344,7 @@ public class Jugador {
         return false; */
     }
 
+    // COLISIONES INFERIORES
     private boolean enColisionAbajo(final int velocidadY) {
 
         for (int r = 0; r < ElementosPrincipales.mapa.areasColisionPorActualizacion.size(); r++) {
@@ -369,6 +382,7 @@ public class Jugador {
         return false;*/
     }
 
+    // COLISIONES LATERAL IZQUIERDO
     private boolean enColisionIzquierda(final int velocidadX) {
 
         for (int r = 0; r < ElementosPrincipales.mapa.areasColisionPorActualizacion.size(); r++) {
@@ -406,6 +420,7 @@ public class Jugador {
         return false;*/
     }
 
+    // COLISIONES LATERAL DERECHO
     private boolean enColisionDerecha(final int velocidadX) {
 
         for (int r = 0; r < ElementosPrincipales.mapa.areasColisionPorActualizacion.size(); r++) {
@@ -443,6 +458,7 @@ public class Jugador {
         return false;*/
     }
 
+    // CAMBIA LA DIRECCION DEL JUGADOR
     private void cambiarDireccion(int velocidadX, int velocidadY) {
 
         // Nos movemos a la izquierda
@@ -467,6 +483,7 @@ public class Jugador {
 
     }
 
+    // EVALUA LA VELOCIDAD EN X
     private int evaluarVelocidadX() {
 
         int velocidadX = 0;
@@ -484,6 +501,7 @@ public class Jugador {
         return velocidadX;
     }
 
+    // EVALUA LAA VELOCIDAD EN Y 
     private int evaluarVelocidadY() {
 
         int velocidadY = 0;
@@ -502,6 +520,7 @@ public class Jugador {
 
     }
 
+    // ANIMA AL PERSONAJE
     private void animar() {
 
         if (!enMovimiento) {
@@ -513,120 +532,119 @@ public class Jugador {
 
     }
 
+    // SETTER
     public void setPosX(double posX) {
         this.posX = posX;
     }
 
+    // SETTER
     public void setPosY(double posY) {
         this.posY = posY;
     }
 
+    // GETTER
     public double getPosXDouble() {
         return posX;
     }
 
+    // GETTER
     public double getPosYDouble() {
         return posY;
     }
 
+    // GETTER
     public int getPosXInt() {
         return (int) posX;
     }
 
+    // GETTER
     public int getPosYInt() {
         return (int) posY;
     }
 
+    // GETTER
     public int getAnchoJugador() {
         return anchoJugador;
     }
 
+    // GETTER
     public int getAltoJugador() {
         return altoJugador;
     }
 
+    // GETTER
     public float getExperiencia() {
         return experiencia;
     }
 
+    // SETTER
     public void setExperiencia(float experiencia) {
         this.experiencia = experiencia;
     }
 
+    // GETTER
     public int getFuerza() {
         return fuerza;
     }
 
+    // SETTER
     public void setFuerza(int fuerza) {
         this.fuerza = fuerza;
     }
 
+    // GETTER
     public AlmacenEquipo getAlmacenEquipo() {
         return ae;
     }
 
+    // GETTER
     public int getDireccion() {
         return this.direccion;
     }
 
+    // GETTER
     public Point getPosicion() {
 
         return new Point(this.getPosXInt(), this.getPosYInt());
 
     }
 
+    // GETTER
     public ArrayList<Rectangle> getAlcanceActual() {
         return this.alcanceActual;
     }
 
-    public void perderVidaJugador() {
-
-        int ataqueRecibido = 0;
-
-        if (this.vidaActual - ataqueRecibido < 0) {
-
-            this.vidaActual = 0;
-
-        } else {
-
-            if (this.defensaActual > 0) {
-
-                this.defensaActual -= ataqueRecibido;
-            }
-
-            if (this.defensaActual <= 0) {
-
-                this.vidaActual -= ataqueRecibido;
-
-            }
-        }
-
-    }
-
+    // GETTER
     public int getVida() {
         return vida;
     }
 
+    // GETTER
     public float getVidaActual() {
         return vidaActual;
     }
 
+    // SETTER
     public void setVidaActual(float vidaActual) {
         this.vidaActual = vidaActual;
     }
 
+    // GETTER
     public float getDefensaActual() {
         return defensaActual;
     }
 
+    // SETTER
     public void setDefensaActual(float defensaActual) {
         this.defensaActual = defensaActual;
     }
 
+    // GETTER
     public String getNombre() {
         return nombre;
     }
 
+    // GETTER
     public Rectangle getArea() {
 
         final int centroX = Constantes.ANCHO_JUEGO / 2 - Constantes.LADO_SPRITE / 2;
@@ -636,28 +654,27 @@ public class Jugador {
 
     }
 
+    // GETTER
     public int getNivel() {
         return nivel;
     }
 
+    // SETTER
     public void setNivel(int nivel) {
         this.nivel = nivel;
     }
 
-    public void enCombate() {
-
-        this.velocidad = 0;
-
-    }
-
+    // GETTER
     public int getEnemigosMuertos() {
         return enemigosMuertos;
     }
 
+    // SETTER
     public void setEnemigosMuertos(int enemigosMuertos) {
         this.enemigosMuertos = enemigosMuertos;
     }
 
+    // CALCULA LA PERDIDA DE VIDA DEL JUGADOR
     public void perderVidaJugador(double ataqueRecibido) {
 
         if (this.defensaActual > 0) {

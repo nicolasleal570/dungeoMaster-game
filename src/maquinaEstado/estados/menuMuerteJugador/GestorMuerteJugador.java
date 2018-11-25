@@ -1,6 +1,7 @@
 package maquinaEstado.estados.menuMuerteJugador;
 
 import graficos.SuperficieDibujo;
+import herramientas.Constantes;
 import herramientas.DibujoDebug;
 import herramientas.ElementosPrincipales;
 import herramientas.MedidorStrings;
@@ -8,7 +9,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import maquinaEstado.EstadoJuego;
-import principal.Constantes;
 
 public class GestorMuerteJugador implements EstadoJuego {
 
@@ -18,6 +18,7 @@ public class GestorMuerteJugador implements EstadoJuego {
 
     private final int margenGeneral = 8;
 
+    // VENTANA QUE APARECE CUANDO SE MUERE EL JUGADOR
     public GestorMuerteJugador(SuperficieDibujo sd) {
 
         this.sd = sd;
@@ -30,6 +31,7 @@ public class GestorMuerteJugador implements EstadoJuego {
     public void actualizar() {
     }
 
+    // DIBUJA LAS ESTADISTICAS DEL JUGADOR
     @Override
     public void dibujar(Graphics g) {
 

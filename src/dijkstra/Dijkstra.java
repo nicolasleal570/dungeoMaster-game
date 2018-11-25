@@ -1,11 +1,11 @@
 package dijkstra;
 
 import entes.enemigos.Enemigo;
+import herramientas.Constantes;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Iterator;
-import principal.Constantes;
 
 public class Dijkstra {
 
@@ -17,6 +17,13 @@ public class Dijkstra {
     private ArrayList<Nodo> visitados;
     private boolean constructor = true;
 
+    /**
+     *
+     * @param centroCalculo punto de la posicion del jugador
+     * @param anchoMapaEnTiles ancho del mapa en tiles
+     * @param altoMapaEnTiles alto del mapa en tiles
+     * @param zonasSolidas rectangulo de colisiones
+     */
     public Dijkstra(final Point centroCalculo, final int anchoMapaEnTiles,
             final int altoMapaEnTiles, final ArrayList<Rectangle> zonasSolidas) {
 
@@ -51,6 +58,7 @@ public class Dijkstra {
         constructor = false;
     }
 
+    // COORDENADAS DE DONDE ESTA EL JUGADOR
     public Point getCoordenadasNodoCoincidente(final Point puntoJugador) {
         Rectangle rectanguloPuntoExacto = new Rectangle(puntoJugador.x / Constantes.LADO_SPRITE,
                 puntoJugador.y / Constantes.LADO_SPRITE, 1, 1);
@@ -67,6 +75,7 @@ public class Dijkstra {
         return puntoExacto;
     }
 
+    // CALCULANDO POSICIONES VECINAS DESDE DONDE ESTA EL ZOMBIE
     private ArrayList<Nodo> clonarNodosMapaANodosPendientes() {
         ArrayList<Nodo> nodosClonados = new ArrayList<>();
         for (Nodo nodo : nodosMapa) {
@@ -79,6 +88,7 @@ public class Dijkstra {
         return nodosClonados;
     }
 
+    // REINICIA Y EVALUA LAS POSICIONES 
     public void reiniciarYEvaluar(final Point centroCalculo) {
         if (!constructor) {
             if (visitados.size() == 0) {
@@ -97,6 +107,7 @@ public class Dijkstra {
         evaluarHeuristicaGlobal();
     }
 
+    // DEFINE EL CENTRO DE LA POSICION
     private void definirCentroCalculoEnPendientes(final Point centroCalculo) {
         for (Nodo nodo : pendientes) {
             if (nodo.getPosicion().equals(centroCalculo)) {
@@ -105,6 +116,7 @@ public class Dijkstra {
         }
     }
 
+    // CALCULO DE TODOS LOS NODOS
     private void evaluarHeuristicaGlobal() {
         while (!pendientes.isEmpty()) {
             int cambios = 0;
@@ -128,6 +140,7 @@ public class Dijkstra {
         }
     }
 
+    // CALCULO 
     private void evaluarHeuristicaVecinos(final Nodo nodo) {
 
         int inicialY = nodo.getPosicion().y;
@@ -170,6 +183,7 @@ public class Dijkstra {
         }
     }
 
+    // GETTER DE LOS NODOS VECINOS
     private ArrayList<Nodo> getNodosVecinos(Nodo nodo) {
         int inicialY = nodo.getPosicion().y;
         int inicialX = nodo.getPosicion().x;
@@ -197,6 +211,7 @@ public class Dijkstra {
         return nodosVecinos;
     }
 
+    // CALCULO DE LOS SIGUIENTES NODOS A PARTIR DE LA POSICION CENTRAL DEL ZOMBIE
     public Nodo encontrarSiguienteNodoParaEnemigo(Enemigo enemigo) {
         ArrayList<Nodo> nodosAfectados = new ArrayList<>();
 
@@ -226,6 +241,7 @@ public class Dijkstra {
         return siguienteNodo;
     }
 
+    // GETTER 
     private int getIndiceNodoPorPosicionEnPendientes(final Point posicion) {
         for (Nodo nodo : pendientes) {
             if (nodo.getPosicion().equals(posicion)) {
@@ -236,6 +252,7 @@ public class Dijkstra {
         return -1;
     }
 
+    // GETTER
     private int getIndiceNodoPorPosicionEnVisitados(final Point posicion) {
         for (Nodo nodo : visitados) {
             if (nodo.getPosicion().equals(posicion)) {
@@ -246,10 +263,12 @@ public class Dijkstra {
         return -1;
     }
 
+    // GETER DE LOS NODOS YA VISITADOS
     public ArrayList<Nodo> getVisitados() {
         return visitados;
     }
 
+    // GETTER DE LOS NODOS PENDIENTES POR VISITAR
     public ArrayList<Nodo> getPendientes() {
         return pendientes;
     }

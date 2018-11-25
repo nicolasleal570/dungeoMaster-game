@@ -1,8 +1,10 @@
 package maquinaEstado.estados.menuJuego;
 
 import graficos.SuperficieDibujo;
+import herramientas.Constantes;
 import herramientas.DibujoDebug;
 import herramientas.ElementosPrincipales;
+import herramientas.EscaladorElementos;
 import herramientas.MedidorStrings;
 import inventario.Objeto;
 import inventario.equipables.Arma;
@@ -11,9 +13,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.Iterator;
-import principal.Constantes;
 import principal.GestorPrincipal;
-import principal.herramientas.EscaladorElementos;
 
 public class MenuEquipo extends SeccionMenu {
 
@@ -60,6 +60,7 @@ public class MenuEquipo extends SeccionMenu {
         super(nombreSeccion, etiquetaMenu, em);
     }
 
+    // ACTUALIZA LOS ENEMENTOS DEL EQUIPO
     @Override
     public void actualizar() {
 
@@ -71,6 +72,7 @@ public class MenuEquipo extends SeccionMenu {
 
     }
 
+    // ACTUALIZA LAS POSICIONES EN EL MENU DE EQUIPABLES
     private void actualizarPosicionesMenu() {
 
         if (ElementosPrincipales.inventario.getArmas().isEmpty()) {
@@ -93,6 +95,7 @@ public class MenuEquipo extends SeccionMenu {
 
     }
 
+    // ACTUALIZA AL OBJETO SELECCIONADO
     private void actualizarSeleccionRaton() {
 
         Rectangle posicionRaton = GestorPrincipal.sd.getRaton().getRectanguloPosicion();
@@ -129,7 +132,7 @@ public class MenuEquipo extends SeccionMenu {
                     && posicionRaton.intersects(EscaladorElementos.escalarRectanguloArriba(contenedorArma))) {
 
                 //Equipando el arma
-                ElementosPrincipales.jugador.getAlmacenEquipo().cambiarArma1((Arma) this.objetoSeleccionado);
+                ElementosPrincipales.jugador.getAlmacenEquipo().cambiarArma((Arma) this.objetoSeleccionado);
 
                 this.objetoSeleccionado.setCantidad(this.objetoSeleccionado.getCantidad() - 1);
                 this.objetoSeleccionado = null;
@@ -142,6 +145,7 @@ public class MenuEquipo extends SeccionMenu {
 
     }
 
+    // ACTUALIZA AL OBJETO CUANDO ESTA SELECCIONADO
     private void actualizarObjetoSeleccionado() {
 
         Rectangle posicionRatonR = GestorPrincipal.sd.getRaton().getRectanguloPosicion();
@@ -166,6 +170,7 @@ public class MenuEquipo extends SeccionMenu {
 
     }
 
+    // DIBUJA LOS ELEMENTOS EN EL INVENTARIO DE EQUIPABLES
     @Override
     public void dibujar(Graphics g, SuperficieDibujo sd, EstructuraMenu em) {
 
@@ -173,6 +178,7 @@ public class MenuEquipo extends SeccionMenu {
 
     }
 
+    // DIBUJA LOS PANELES DEL INVENTARIO DE EQUIPABLES
     public void dibujarPanel(Graphics g, Rectangle panel, Rectangle tituloPanel, String nombrePanel) {
 
         g.setColor(new Color(0x1BA160));
@@ -189,6 +195,7 @@ public class MenuEquipo extends SeccionMenu {
 
     }
 
+    // DIBUJA LOS DISTINTOS PANELES
     private void dibujarPaneles(final Graphics g) {
 
         //Dibuja los equipables
@@ -202,6 +209,7 @@ public class MenuEquipo extends SeccionMenu {
 
     }
 
+    // DIBUJA CADA OBJETO EN LOS EQUIPABLES
     private void dibujarObjetosEquipables(final Graphics g, final Rectangle tituloPanel) {
 
         if (ElementosPrincipales.inventario.getArmas().isEmpty()) {
@@ -281,6 +289,7 @@ public class MenuEquipo extends SeccionMenu {
 
     }
 
+    // DIBUJA EL PANEL DONDE SE COLOCAN LOS ELEMENTOS
     private void dibujarPanelObjetos(final Graphics g, final Rectangle panel, final Rectangle tituloPanel, final String nombrePanel) {
 
         dibujarPanel(g, panel, tituloPanel, nombrePanel);
@@ -289,6 +298,7 @@ public class MenuEquipo extends SeccionMenu {
         this.dibujarObjetosEquipables(g, tituloPanel);
     }
 
+    // DIBUJA EL PANEL DONDE SE EQUIPA EL ARMA
     private void dibujarPanelEquipo(final Graphics g, final Rectangle panel, final Rectangle tituloPanel, final String nombrePanel) {
 
         dibujarPanel(g, panel, tituloPanel, nombrePanel);
@@ -307,13 +317,13 @@ public class MenuEquipo extends SeccionMenu {
         if (GestorPrincipal.sd.getRaton().isClickDerecho()
                 && posicionRaton.intersects(EscaladorElementos.escalarRectanguloArriba(this.contenedorArma))) {
 
-            ElementosPrincipales.jugador.getAlmacenEquipo().cambiarArma1(null);
+            ElementosPrincipales.jugador.getAlmacenEquipo().cambiarArma(null);
 
         } else {
 
-            if (ElementosPrincipales.jugador.getAlmacenEquipo().getArma1() != null) {
+            if (ElementosPrincipales.jugador.getAlmacenEquipo().getArma() != null) {
 
-                DibujoDebug.dibujarImagen(g, ElementosPrincipales.jugador.getAlmacenEquipo().getArma1().getSprite().getImagen(), coordenadaImagen);
+                DibujoDebug.dibujarImagen(g, ElementosPrincipales.jugador.getAlmacenEquipo().getArma().getSprite().getImagen(), coordenadaImagen);
 
             }
 
@@ -327,6 +337,7 @@ public class MenuEquipo extends SeccionMenu {
         //dibujar todos los objetos equipados
     }
 
+    // PANEL CON LA INFORMACION DE CONTROLES
     private void dibujarPanelControles(final Graphics g, final Rectangle panel, final Rectangle tituloPanel, final String nombrePanel) {
 
         dibujarPanel(g, panel, tituloPanel, nombrePanel);

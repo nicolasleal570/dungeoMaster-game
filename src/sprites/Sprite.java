@@ -8,6 +8,7 @@ public class Sprite {
 
     private final int width, height;
 
+    // CREA UN SPRITE A PARTIR DE UNA IMAGEN
     public Sprite(BufferedImage imagen) {
         this.imagen = imagen;
 

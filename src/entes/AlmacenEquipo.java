@@ -9,39 +9,40 @@ public class AlmacenEquipo {
 
     private Arma arma;
     private Consumibles consumible;
-    //municion
 
-    public AlmacenEquipo(final Arma arma1) {
+    /**
+     * @param arma equipada
+     */
+    public AlmacenEquipo(final Arma arma) {
 
-        this.arma = arma1;
-
-    }
-
-    public AlmacenEquipo(final Consumibles consumible) {
-
-        this.consumible = consumible;
+        this.arma = arma;
 
     }
 
-    public Arma getArma1() {
+    // GETTER
+    public Arma getArma() {
         if (this.arma == null) {
             return this.arma = (Arma) RegistroObjetos.getObjeto(24); // Devolviendo el arma desarmado
         }
         return this.arma;
     }
 
+    // GETTER
     public Consumibles getConsumible() {
         return this.consumible;
     }
 
-    public void cambiarArma1(final Arma arma1) {
-        this.arma = arma1;
+    // SETTER
+    public void cambiarArma(final Arma arma) {
+        this.arma = arma;
     }
 
+    // SETTER
     public void cambiarConsumible(final Consumibles consumible) {
         this.consumible = consumible;
     }
 
+    // CUANDO EL JUGADOR UTILIZA UNA POCION 
     public void consumir() {
 
         if (this.consumible != null) {

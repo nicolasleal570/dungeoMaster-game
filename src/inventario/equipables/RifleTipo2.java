@@ -1,14 +1,14 @@
 package inventario.equipables;
 
 import entes.Jugador;
+import herramientas.Constantes;
 import java.awt.Rectangle;
 import java.util.ArrayList;
-import principal.Constantes;
 
 public class RifleTipo2 extends Arma {
 
-    public RifleTipo2(int id, String nombre, String descripcion, int ataqueMinimo, int ataqueMaximo, boolean automatica, boolean penetrante, double ataquePorSegundo) {
-        super(id, nombre, descripcion, ataqueMinimo, ataqueMaximo, automatica, penetrante, ataquePorSegundo);
+    public RifleTipo2(int id, String nombre, int ataqueMinimo, int ataqueMaximo, boolean automatica, boolean penetrante, double ataquePorSegundo) {
+        super(id, nombre, ataqueMinimo, ataqueMaximo, automatica, penetrante, ataquePorSegundo);
     }
 
     /* ALCANCE DE LA PISTOLA */

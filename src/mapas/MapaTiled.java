@@ -6,6 +6,7 @@ import entes.enemigos.Enemigo;
 import entes.enemigos.RegistroEnemigos;
 import herramientas.CalculadoraDistancia;
 import herramientas.CargadorRecursos;
+import herramientas.Constantes;
 import herramientas.DibujoDebug;
 import herramientas.ElementosPrincipales;
 import inventario.Objeto;
@@ -21,7 +22,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import principal.Constantes;
 import sprites.HojaSprites;
 import sprites.Sprite;
 
@@ -50,6 +50,7 @@ public class MapaTiled {
 
     private Random random = new Random();
 
+    // CREADOR DEL MAPA DEL JUEGO
     public MapaTiled(String ruta) {
 
         String contenido = CargadorRecursos.leerArchivoTexto(ruta); // Archivo JSON
@@ -263,6 +264,7 @@ public class MapaTiled {
 
     } // Fin del constructor
 
+    // ACTUALIZA EL MAPA
     public void actualizar() {
 
         actualizarAreasColision();
@@ -271,8 +273,6 @@ public class MapaTiled {
         actualizarAtaques();
         actualizarNivelJugador();
 
-        System.out.println("Defensa Jugador: " + ElementosPrincipales.jugador.getDefensaActual());
-
         Point punto = new Point(ElementosPrincipales.jugador.getPosXInt(),
                 ElementosPrincipales.jugador.getPosYInt());
         Point puntoCoincidente = d.getCoordenadasNodoCoincidente(punto);
@@ -280,6 +280,7 @@ public class MapaTiled {
 
     }
 
+    // ACTUALIZA LOS ATAQUES EN EL MAPA
     private void actualizarAtaques() {
 
         if (this.enemigosMapa.isEmpty()) { // No permite tener al jugador desarmado
@@ -290,9 +291,9 @@ public class MapaTiled {
 
             ArrayList<Enemigo> enemigosAlcanzados = new ArrayList<>();
 
-            if (ElementosPrincipales.jugador.getAlmacenEquipo().getArma1() != null) {
+            if (ElementosPrincipales.jugador.getAlmacenEquipo().getArma() != null) {
 
-                if (ElementosPrincipales.jugador.getAlmacenEquipo().getArma1().isPenetrante()) {
+                if (ElementosPrincipales.jugador.getAlmacenEquipo().getArma().isPenetrante()) {
 
                     for (Enemigo enemigo : this.enemigosMapa) {
 
@@ -339,7 +340,7 @@ public class MapaTiled {
 
                 }
 
-                ElementosPrincipales.jugador.getAlmacenEquipo().getArma1().atacar(enemigosAlcanzados);
+                ElementosPrincipales.jugador.getAlmacenEquipo().getArma().atacar(enemigosAlcanzados);
 
             }
 
@@ -372,6 +373,7 @@ public class MapaTiled {
 
     }
 
+    // ACTUALIZA LOS VALORES DEL JUGADOR
     private void actualizandoParametrosJugador(Enemigo enemigo) {
 
         if (ElementosPrincipales.jugador.getVidaActual() >= 100) {
@@ -395,6 +397,7 @@ public class MapaTiled {
 
     }
 
+    // ACTUALIZA LAS COLISIONES
     private void actualizarAreasColision() {
 
         if (!this.areasColisionPorActualizacion.isEmpty()) {
@@ -418,6 +421,7 @@ public class MapaTiled {
 
     }
 
+    // ACTUALIZA LOS OBJETOS RECOGIDOS
     private void actualizarRecogidaObjetos() {
 
         if (!this.objetosMapa.isEmpty()) {
@@ -456,6 +460,7 @@ public class MapaTiled {
 
     }
 
+    // ACTUALIZA EL NIVEL DEL JUGADOR
     private void actualizarNivelJugador() {
 
         if (ElementosPrincipales.jugador.getExperiencia() > 100 * ElementosPrincipales.jugador.getNivel()) {
@@ -468,6 +473,7 @@ public class MapaTiled {
 
     }
 
+    // ACTUALIZA LOS ENEMIGOS DEL MAPA
     private void actualizarEnemigos() {
         if (!enemigosMapa.isEmpty()) {
             for (Enemigo enemigo : this.enemigosMapa) {
@@ -652,6 +658,7 @@ public class MapaTiled {
         return numeroRonda;
     }
 
+    // CREA ENEMIGOS CUANDO TODOS SE MUEREN
     public ArrayList<Enemigo> crearEnemigosSiguienteOrda() {
 
         String contenido = CargadorRecursos.leerArchivoTexto("/recursos/hojaMapa/mapa-apocaliptico.json"); // Archivo JSON
@@ -682,10 +689,12 @@ public class MapaTiled {
 
     }
 
+    // SUMADOR DE RONDAS
     public void sumarRonda() {
         this.numeroRonda += 1;
     }
 
+    // CREA UN DROP CUANDO SE MUERE UN ENEMIGO
     private ObjetoUnicoTiled crearDrops(Enemigo enemigo) {
 
         Point posObjeto = new Point(enemigo.getPosicionXInt(), enemigo.getPosicionYInt()); // Posicion del objeto segun el zombie

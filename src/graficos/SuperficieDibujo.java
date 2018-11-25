@@ -2,6 +2,7 @@ package graficos;
 
 import control.GestorControles;
 import control.Raton;
+import herramientas.Constantes;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -9,7 +10,6 @@ import java.awt.Graphics2D;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 import maquinaEstado.GestorEstados;
-import principal.Constantes;
 
 public class SuperficieDibujo extends Canvas {
 
@@ -17,6 +17,10 @@ public class SuperficieDibujo extends Canvas {
 
     private Raton raton;
 
+    /**
+     * @param width de la ventana
+     * @param height de la ventana
+     */
     public SuperficieDibujo(int width, int height) {
         this.width = width;
         this.height = height;
@@ -24,7 +28,7 @@ public class SuperficieDibujo extends Canvas {
         this.raton = new Raton(this);
 
         this.setCursor(this.raton.getCursor());
-        this.setIgnoreRepaint(true);
+        this.setIgnoreRepaint(true); // Redibuja de negro la pantalla cada vez que inicia 
         this.setPreferredSize(new Dimension(width, height));
 
         this.addKeyListener(GestorControles.teclado);
@@ -35,10 +39,12 @@ public class SuperficieDibujo extends Canvas {
 
     }
 
+    // ACTUALIZA AL RATON SOBRE EL CANVAS
     public void actualizar() {
         this.raton.actualizar(this);
     }
 
+    // DIBUJA LAS IMAGENES SOBRE EL CANVAS SEGUN EL ESTADO
     public void dibujar(final GestorEstados ge) {
 
         BufferStrategy buffer = getBufferStrategy();

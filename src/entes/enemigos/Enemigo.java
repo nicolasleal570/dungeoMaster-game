@@ -2,17 +2,16 @@ package entes.enemigos;
 
 import dijkstra.Nodo;
 import entes.Jugador;
-import herramientas.CalculadoraDistancia;
+import herramientas.Constantes;
 import herramientas.DibujoDebug;
 import herramientas.ElementosPrincipales;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Random;
-import principal.Constantes;
 
+/* SUPER CLASE ENEMIGO */
 public abstract class Enemigo {
 
     protected int idEnemigo;
@@ -42,6 +41,16 @@ public abstract class Enemigo {
 
     protected Nodo siguienteNodo;
 
+    /**
+     * @param idEnemigo tipo del enemigo
+     * @param nombre del enemigo
+     * @param vidaMaxima
+     * @param ataqueMinimo
+     * @param ataqueMaximo
+     * @param defensaMaxima
+     * @param nivel en el que se encuentra
+     * @param ataquePorSegundo velocidad con la que ataca
+     */
     public Enemigo(int idEnemigo, String nombre, int vidaMaxima, int ataqueMinimo, int ataqueMaximo, int defensaMaxima, int nivel,
             final double ataquePorSegundo) {
 
@@ -67,6 +76,7 @@ public abstract class Enemigo {
         this.velocidad = 0.6;
     }
 
+    // ACTUALIZA AL ENEMIGO
     public void actualizar(ArrayList<Enemigo> enemigos) {
 
         if (this.actualizacionParaSiguienteAtaque > 0) {
@@ -81,6 +91,7 @@ public abstract class Enemigo {
         }
     }
 
+    // LO MOVILIZA SEGUN DONDE ESTE
     protected void moverHaciaSiguienteNodo(ArrayList<Enemigo> enemigos) {
         if (siguienteNodo == null) {
             return;
@@ -116,6 +127,7 @@ public abstract class Enemigo {
         }
     }
 
+    // DIBUJA AL ENEMIGO
     public void dibujar(Graphics g, final int puntoX, final int puntoY) {
 
         if (this.vidaActual <= 0) {
@@ -138,25 +150,14 @@ public abstract class Enemigo {
 
     }
 
-    private void dibujarDistancia(Graphics g, final int puntoX, final int puntoY) {
-
-        Point puntoJugador = new Point(ElementosPrincipales.jugador.getPosXInt(),
-                ElementosPrincipales.jugador.getPosYInt());
-
-        Point puntoEnemigo = new Point(this.getPosicionXInt(), this.getPosicionYInt());
-
-        Double distancia = CalculadoraDistancia.getDistanciaEntrePuntos(puntoJugador, puntoEnemigo);
-
-        DibujoDebug.dibujarString(g, String.format("%.2f", distancia), puntoX, puntoY - 8);
-
-    }
-
+    // DIBUJA EL NIVEL DEL ENEMIGO
     private void dibujarNivel(Graphics g, final int puntoX, final int puntoY) {
 
         DibujoDebug.dibujarString(g, "Z-Nivel: " + this.nivel, puntoX, puntoY - 12);
 
     }
 
+    // DIBUJA LA BARRA DE VIDA
     private void dibujarBarraVida(final Graphics g, final int puntoX, final int puntoY) {
 
         g.setColor(Color.red);
@@ -164,6 +165,7 @@ public abstract class Enemigo {
 
     }
 
+    // DIBUJA LA BARRA DE DEFENSA
     private void dibujarBarraDefensa(final Graphics g, final int puntoX, final int puntoY) {
 
         g.setColor(Color.blue);
@@ -171,6 +173,7 @@ public abstract class Enemigo {
 
     }
 
+    // CALCULA LA PERDIDA DE VIDA DEL ENEMIGO
     public void perderVidaEnemigo(double ataqueRecibido) {
 
         if (this.defensaActual > 0) {
@@ -190,6 +193,7 @@ public abstract class Enemigo {
 
     }
 
+    // GETTER
     public int getAtaqueMedio() {
 
         Random r = new Random();
@@ -198,11 +202,13 @@ public abstract class Enemigo {
 
     }
 
+    // SETTER
     public void setPosicion(double posicionX, double posicionY) {
         this.posicionX = posicionX;
         this.posicionY = posicionY;
     }
 
+    // GETTER
     public int getIdEnemigo() {
         return idEnemigo;
     }
@@ -276,6 +282,7 @@ public abstract class Enemigo {
         return new Rectangle((int) this.posicionX, (int) this.posicionY, Constantes.LADO_SPRITE, Constantes.LADO_SPRITE);
     }
 
+    // SETTER
     public void cambiarSiguienteNodo(Nodo nodo) {
         this.siguienteNodo = nodo;
     }
@@ -284,11 +291,12 @@ public abstract class Enemigo {
         return this.siguienteNodo;
     }
 
+    // EVALUA CUANDO UN ARMA TIENE CAPACIDAD DE DARLE AL ENEMIGO
     public boolean armaColisionandoContraEnemigo(Jugador jugador) {
 
         boolean chocando = false;
 
-        if (this.getArea().intersects(ElementosPrincipales.jugador.getAlmacenEquipo().getArma1().getAlcance(jugador).get(0))) {
+        if (this.getArea().intersects(ElementosPrincipales.jugador.getAlmacenEquipo().getArma().getAlcance(jugador).get(0))) {
             chocando = true;
         }
 
@@ -296,6 +304,7 @@ public abstract class Enemigo {
 
     }
 
+    // CUANDO EL ENEMIGO CHOCA CONTRA EL ENEMIGO
     public boolean jugadorColisionandoContraEnemigo() {
 
         boolean chocando = false;
@@ -308,6 +317,7 @@ public abstract class Enemigo {
 
     }
 
+    // CALCULO DEL ATAQUE DEL ENEMIGO
     public void atacar(Jugador jugador) {
 
         if (this.actualizacionParaSiguienteAtaque > 0) {

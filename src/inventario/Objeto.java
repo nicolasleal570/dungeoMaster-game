@@ -7,7 +7,6 @@ public abstract class Objeto {
 
     protected final int id;
     protected final String nombre;
-    protected final String descripcion;
 
     protected int cantidad;
     protected int cantidadMaxima;
@@ -15,10 +14,13 @@ public abstract class Objeto {
     protected Rectangle posicionMenu;
     protected Rectangle posicionFlotante;
 
-    public Objeto(final int id, final String nombre, final String descripcion) {
+    /**
+     * @param id del objeto
+     * @param nombre del objeto
+     */
+    public Objeto(final int id, final String nombre) {
         this.id = id;
         this.nombre = nombre;
-        this.descripcion = descripcion;
 
         this.cantidad = 0;
         this.cantidadMaxima = 10;
@@ -28,8 +30,13 @@ public abstract class Objeto {
 
     }
 
-    public Objeto(final int id, final String nombre, final String descripcion, final int cantidad) {
-        this(id, nombre, descripcion);
+    /**
+     * @param id del objeto
+     * @param nombre del objeto
+     * @param cantidad del objeto
+     */
+    public Objeto(final int id, final String nombre, final int cantidad) {
+        this(id, nombre);
 
         if (cantidad <= this.cantidadMaxima) {
 
@@ -38,6 +45,7 @@ public abstract class Objeto {
 
     }
 
+    // INCRMEENTA AL OBJETO CUANDO SE VA A RECOGER
     public boolean incrementarCantidad(final int incremento) {
 
         boolean incrementado = false;
@@ -51,6 +59,7 @@ public abstract class Objeto {
 
     }
 
+    // RECUDE AL OBJETO
     public boolean reducirCantidad(final int reduccion) {
 
         boolean reducido = false;
@@ -74,10 +83,6 @@ public abstract class Objeto {
         return id;
     }
 
-    public String getDescripcion() {
-        return descripcion;
-    }
-
     public int getCantidad() {
         return cantidad;
     }
@@ -90,18 +95,22 @@ public abstract class Objeto {
         }
     }
 
+    // GETTER DE LA POSICION EN EL INVENTARIO
     public Rectangle getPosicionMenu() {
         return posicionMenu;
     }
 
+    // GETTER DE LA POSICION CUANDO EL RATON SELECCIONA AL OBJETO
     public Rectangle getPosicionFlotante() {
         return posicionFlotante;
     }
 
+    // SETTER DE LA POSICION EN EL INVENTARIO
     public void setPosicionMenu(Rectangle posicionMenu) {
         this.posicionMenu = posicionMenu;
     }
 
+    // SETTER DE LA POSICION CON EL MOUSE
     public void setPosicionFlotante(Rectangle posicionFlotante) {
         this.posicionFlotante = posicionFlotante;
     }

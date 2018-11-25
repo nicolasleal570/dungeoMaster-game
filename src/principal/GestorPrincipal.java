@@ -22,17 +22,25 @@ public class GestorPrincipal {
     private static int segundosJuego = 0;
     private static int minutosJuego = 0;
 
+    /**
+     *
+     * @param titulo del juego
+     * @param width de la pantalla
+     * @param height de la pantalla
+     */
     public GestorPrincipal(String titulo, int width, int height) {
         this.titulo = titulo;
         this.width = width;
         this.height = height;
     }
 
+    // INICIA EL BUCLE DEL JUEGO
     public void iniciarJuego() {
         this.enFuncionamiento = true;
         this.inicializar();
     }
 
+    // BUCLE DEL JUEGO 
     public void iniciarBuclePrincipal() {
         int actualizacionAcumulada = 0;
         int framesAcumulados = 0;
@@ -92,28 +100,34 @@ public class GestorPrincipal {
 
     }
 
+    // CALCULO DE LOS SEGUNDOS JUGADOS
     public static int getSegundosJuego() {
         return segundosJuego;
     }
 
+    // CALCULO DE LOS MINUTOS JUGADOS
     public static int getMinutosJuego() {
         return minutosJuego;
     }
 
+    // GETTER DE LOS FPS
     public static int getFps() {
         return fps;
     }
 
+    // GETTER DE LAS ACTUALIZACIONES POR SEGUNDO
     public static int getAps() {
         return aps;
     }
 
+    // INICIA LA VENTANA DEL JUEGO
     public void inicializar() {
         this.sd = new SuperficieDibujo(this.width, this.height);
         this.ventana = new Ventana(titulo, sd);
         this.ge = new GestorEstados(sd); // Inicinado el gestor de estados
     }
 
+    // CAMBIA LOS ESTADOS DEL JUEGO
     private void actualizar() {
 
         if (GestorControles.teclado.start) {
@@ -139,6 +153,7 @@ public class GestorPrincipal {
 
     }
 
+    // MUESTRA LOS GRAFICOS
     private void dibujar() {
         this.sd.dibujar(this.ge);
 

@@ -2,7 +2,7 @@ package entes.enemigos;
 
 import herramientas.DibujoDebug;
 import java.awt.Graphics;
-import principal.Constantes;
+import herramientas.Constantes;
 import sprites.HojaSprites;
 
 public class Zombie extends Enemigo {

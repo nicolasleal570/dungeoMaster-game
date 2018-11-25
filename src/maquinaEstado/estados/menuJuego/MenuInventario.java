@@ -1,8 +1,10 @@
 package maquinaEstado.estados.menuJuego;
 
 import graficos.SuperficieDibujo;
+import herramientas.Constantes;
 import herramientas.DibujoDebug;
 import herramientas.ElementosPrincipales;
+import herramientas.EscaladorElementos;
 import herramientas.MedidorStrings;
 import inventario.Objeto;
 import inventario.consumibles.Consumibles;
@@ -11,9 +13,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.Iterator;
-import principal.Constantes;
 import principal.GestorPrincipal;
-import principal.herramientas.EscaladorElementos;
 
 public class MenuInventario extends SeccionMenu {
 

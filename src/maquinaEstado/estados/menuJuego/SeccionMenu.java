@@ -1,11 +1,11 @@
 package maquinaEstado.estados.menuJuego;
 
 import graficos.SuperficieDibujo;
+import herramientas.Constantes;
 import herramientas.DibujoDebug;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import principal.Constantes;
 
 public abstract class SeccionMenu {
 
@@ -15,6 +15,7 @@ public abstract class SeccionMenu {
 
     protected final int margenGeneral = 8;
 
+    // CREA DIFERENTES SECCIONES EN EL INVENTARIO
     public SeccionMenu(final String nombreSeccion, final Rectangle etiquetaMenu, final EstructuraMenu em) {
         this.nombreSeccion = nombreSeccion;
         this.etiquetaMenu = etiquetaMenu;
@@ -22,10 +23,13 @@ public abstract class SeccionMenu {
         this.em = em;
     }
 
+    // ACTUALIZA LAS SECCIONES
     public abstract void actualizar();
 
+    // DIBUJA LAS SECCIONES
     public abstract void dibujar(final Graphics g, final SuperficieDibujo sd, EstructuraMenu em);
 
+    // DIBUJA ETIQUETA INACTIVA 
     public void dibujarEtiquetaInactiva(final Graphics g) {
 
         DibujoDebug.dibujarRectanguloRelleno(g, this.etiquetaMenu, Color.white);
@@ -33,6 +37,7 @@ public abstract class SeccionMenu {
 
     }
 
+    // DIBUJA ETIQUETA ACTIVA
     public void dibujarEtiquetaActiva(final Graphics g) {
 
         Rectangle marcaActiva = new Rectangle(etiquetaMenu.x, etiquetaMenu.y, 5, etiquetaMenu.height);
@@ -43,6 +48,7 @@ public abstract class SeccionMenu {
 
     }
 
+    // RESALTA LA ETIQUETA INACTIVA
     public void dibujarEtiquetaInactivaResaltada(final Graphics g) {
 
         DibujoDebug.dibujarRectanguloRelleno(g, etiquetaMenu, Color.white);
@@ -54,6 +60,7 @@ public abstract class SeccionMenu {
 
     }
 
+    // RESALTA LA ETIQUETA ACTIVA
     public void dibujarEtiquetaActivaResaltada(Graphics g) {
 
         Rectangle marcaActiva = new Rectangle(etiquetaMenu.x, etiquetaMenu.y, 5, etiquetaMenu.height);

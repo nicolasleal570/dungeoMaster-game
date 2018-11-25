@@ -23,6 +23,9 @@ public class Raton extends MouseAdapter {
 
     private boolean clickDerecho;
 
+    /**
+     * @param sd Superficie donde se van a mostrar los graficos
+     */
     public Raton(final SuperficieDibujo sd) {
 
         /* CAMBIANDOLE EL ICONO AL CURSOR */
@@ -43,16 +46,19 @@ public class Raton extends MouseAdapter {
 
     }
 
+    // ACTUALIZA TODAS LAS FUNCIONES DEL MOUSE
     public void actualizar(SuperficieDibujo sd) {
         this.actualizarPosicion(sd);
     }
 
+    // DIBUJA LAS COORDENADAS DEL MOUSE
     public void dibujar(Graphics g) {
 
 //        g.drawString("RX: " + this.posicion.getX(), 20, 110);
 //        g.drawString("RY: " + this.posicion.getY(), 20, 125);
     }
 
+    // ACTUALIZA LA POSICION DEL MOUSE POR LA PANTALLA
     private void actualizarPosicion(final SuperficieDibujo sd) {
 
         Point posicionInicial = MouseInfo.getPointerInfo().getLocation();
@@ -63,6 +69,7 @@ public class Raton extends MouseAdapter {
 
     }
 
+    // UTIIZADO PARA LAS COLISIONES CON OBJETOS DEL JUEGO
     public Rectangle getRectanguloPosicion() {
 
         final Rectangle area = new Rectangle(this.posicion.x, this.posicion.y, 10, 10);
@@ -71,10 +78,12 @@ public class Raton extends MouseAdapter {
 
     }
 
+    // POSICION DEL MAPA
     public Point getPosicion() {
         return posicion;
     }
 
+    // CURSOR
     public Cursor getCursor() {
         return cursor;
     }
@@ -96,6 +105,7 @@ public class Raton extends MouseAdapter {
 
     }
 
+    // Se activa cuando soltamos los botones del mouse
     @Override
     public void mouseReleased(MouseEvent e) {
 
@@ -112,10 +122,12 @@ public class Raton extends MouseAdapter {
 
     }
 
+    // GETTER DEL CLICK IZQUIERDO
     public boolean isClickIzquierdo() {
         return clickIzquierdo;
     }
 
+    // GETTER DEL CLICK DERECHO
     public boolean isClickDerecho() {
         return clickDerecho;
     }

@@ -22,9 +22,19 @@ public abstract class Arma extends Objeto {
     protected double ataquePorSegundo; // Cadencia
     protected int actualizacionParaSiguienteAtaque; // Cuantas actualizaciones deben pasar entre un disparo y otro
 
-    public Arma(int id, String nombre, String descripcion, final int ataqueMinimo, final int ataqueMaximo, final boolean automatica,
+    /**
+     *
+     * @param id del objeto
+     * @param nombre del objeto
+     * @param ataqueMinimo minimo rango de ataque
+     * @param ataqueMaximo maximo rango de ataque
+     * @param automatica si el arma es automatica o no
+     * @param penetrante si es penetrante o no
+     * @param ataquePorSegundo ataques por segundo
+     */
+    public Arma(int id, String nombre, final int ataqueMinimo, final int ataqueMaximo, final boolean automatica,
             final boolean penetrante, final double ataquePorSegundo) {
-        super(id, nombre, descripcion);
+        super(id, nombre);
 
         this.ataqueMinimo = ataqueMinimo;
         this.ataqueMaximo = ataqueMaximo;
@@ -36,6 +46,7 @@ public abstract class Arma extends Objeto {
 
     }
 
+    // ACTUALIZA EL ARMA DURANTE EL JUEGO
     public void actualizar() {
 
         if (this.actualizacionParaSiguienteAtaque > 0) {
@@ -44,6 +55,7 @@ public abstract class Arma extends Objeto {
 
     }
 
+    // EVALUA LOS ATAQUES DEL ARMA
     public void atacar(final ArrayList<Enemigo> enemigos) {
 
         if (this.actualizacionParaSiguienteAtaque > 0) {
@@ -60,7 +72,7 @@ public abstract class Arma extends Objeto {
 
         for (Enemigo enemigo : enemigos) {
 
-            if (ElementosPrincipales.jugador.getAlmacenEquipo().getArma1() instanceof Desarmado) {
+            if (ElementosPrincipales.jugador.getAlmacenEquipo().getArma() instanceof Desarmado) {
 
                 ataqueActual = this.getAtaqueMedio() + ElementosPrincipales.jugador.getFuerza() / 50;
 
@@ -76,6 +88,7 @@ public abstract class Arma extends Objeto {
 
     }
 
+    // ALCANCE DEL ARMA
     public abstract ArrayList<Rectangle> getAlcance(final Jugador jugador);
 
     @Override
@@ -83,6 +96,7 @@ public abstract class Arma extends Objeto {
         return this.hojaArmas.getSprite(this.id - 20);
     }
 
+    // GETTER DEL ATAQUE MEDIO ENTRE LOS RANGOS DEL ARMA
     public int getAtaqueMedio() {
 
         Random r = new Random();

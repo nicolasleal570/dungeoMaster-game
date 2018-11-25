@@ -10,6 +10,7 @@ public class HojaSprites {
 
     final private Sprite[] sprite;
 
+    // HOJA CON LAS IMAGENES EN SPRITES
     public HojaSprites(String ruta, final int sizeSprite, final boolean hojaOpaca) {
 
         final BufferedImage imagen;
@@ -60,6 +61,7 @@ public class HojaSprites {
 
     }
 
+    // RELLENA UN ARREGLO DE SPRITES CON LAS IMAGENES DE LA HOJA
     private void rellenarSpritesDesdeImagen(BufferedImage imagen) {
         for (int y = 0; y < this.altoHojaEnSprites; y++) {
             for (int x = 0; x < this.anchoHojaEnSprites; x++) {

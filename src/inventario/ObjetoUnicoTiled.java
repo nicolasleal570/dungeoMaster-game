@@ -8,6 +8,7 @@ public class ObjetoUnicoTiled {
     private Objeto objeto;
     private int cantidad;
 
+    // CREA UN OBJETO UNICO A PARTIR DE LA CLASE OBJETO
     public ObjetoUnicoTiled(Point posicion, Objeto objeto, int cantidad) {
         this.posicion = posicion;
         this.objeto = objeto;

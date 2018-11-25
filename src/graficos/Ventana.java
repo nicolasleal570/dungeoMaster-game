@@ -14,6 +14,10 @@ public class Ventana extends JFrame {
 
     private JTextField nombre = new JTextField();
 
+    /**
+     * @param titulo de la ventana
+     * @param sd superficie de dibujo (canvas)
+     */
     public Ventana(final String titulo, final SuperficieDibujo sd) {
         this.titulo = titulo;
 
@@ -24,6 +28,7 @@ public class Ventana extends JFrame {
 
     }
 
+    // ESTABLECIENDO PARAMETROS DE LA VENTANA
     private void configurarVentana(final SuperficieDibujo sd) {
         this.setTitle(this.titulo);
         this.setIconImage(this.icono.getImage());

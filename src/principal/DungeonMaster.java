@@ -1,6 +1,8 @@
 package principal;
 
-public class DungeonRemake {
+import herramientas.Constantes;
+
+public class DungeonMaster {
 
     public static void main(String[] args) {
 

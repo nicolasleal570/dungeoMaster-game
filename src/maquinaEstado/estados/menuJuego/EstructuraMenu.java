@@ -1,10 +1,10 @@
 package maquinaEstado.estados.menuJuego;
 
+import herramientas.Constantes;
 import herramientas.DibujoDebug;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import principal.Constantes;
 
 public class EstructuraMenu {
 
@@ -21,6 +21,7 @@ public class EstructuraMenu {
     public final int anchoEtiquetas;
     public final int altoEtiquetas;
 
+    // INVENTARIO
     public EstructuraMenu() {
 
         this.colorBannerSuperior = new Color(0x1BA160);
@@ -42,6 +43,7 @@ public class EstructuraMenu {
 
     }
 
+    // DIBUJANDO EL INVENTARIO
     public void dibujar(Graphics g) {
 
         DibujoDebug.dibujarRectanguloRelleno(g, this.bannerSuperior, this.colorBannerSuperior);
