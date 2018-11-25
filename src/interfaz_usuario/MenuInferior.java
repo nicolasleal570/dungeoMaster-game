@@ -7,11 +7,13 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import principal.Constantes;
+import principal.GestorPrincipal;
 
 public class MenuInferior {
 
     private Rectangle areaInventario;
     private Rectangle bordeAreaInventario;
+    private Rectangle areaTiempo;
 
     private Color negroDesaturado;
     private Color RojoClaro;
@@ -21,7 +23,7 @@ public class MenuInferior {
 
         int altoMenu = 64; //64pixeles
 
-        this.areaInventario = new Rectangle(0, Constantes.ALTO_JUEGO - altoMenu, Constantes.ANCHO_JUEGO, altoMenu);// ALTO_JUEGO(?)
+        this.areaInventario = new Rectangle(0, Constantes.ALTO_JUEGO - altoMenu, Constantes.ANCHO_JUEGO, altoMenu);
         this.bordeAreaInventario = new Rectangle(areaInventario.x, areaInventario.y - 1, areaInventario.width, 1);
 
         this.negroDesaturado = new Color(23, 23, 23); //codigo del color
@@ -38,7 +40,7 @@ public class MenuInferior {
         this.dibujarBarraExp(g, ElementosPrincipales.jugador.getExperiencia());
         this.dibujarNivelJugador(g, ElementosPrincipales.jugador.getNivel());
         this.dibujarOrdaActualZombies(g, ElementosPrincipales.mapa.getNumeroRonda());
-
+        this.dibujarTiempoJuego(g, "Tiempo de Juego: " + this.calcularTiempo());
         //this.dibujarRanurasObjetos(g);
     }
 
@@ -174,6 +176,23 @@ public class MenuInferior {
 
     }
 
+    private void dibujarTiempoJuego(Graphics g, final String txt) {
+
+        this.areaTiempo = new Rectangle(0, 0, 140 + MedidorStrings.medirAnchoPixeles(g, txt), 25);
+
+        final int xInicial = this.areaTiempo.x + MedidorStrings.medirAnchoPixeles(g, txt) / 2;
+        final int yInicial = this.areaTiempo.y + this.areaTiempo.height - MedidorStrings.medirAltoPixeles(g, txt) / 2 - 2;
+
+        g.setColor(new Color(23, 23, 23));
+
+        DibujoDebug.dibujarRectanguloRelleno(g, this.areaTiempo);
+        DibujoDebug.dibujarRectanguloContorno(g, this.areaTiempo.x, this.areaTiempo.y, this.areaTiempo.width, this.areaTiempo.height, Color.white);
+
+        g.setColor(Color.white);
+        DibujoDebug.dibujarString(g, txt, xInicial, yInicial);
+
+    }
+
     private void dibujarRanurasObjetos(final Graphics g) {
         final int anchoRanura = 32;
         final int numerosRanuras = 5;
@@ -194,6 +213,17 @@ public class MenuInferior {
             DibujoDebug.dibujarString(g, "" + (i + 1), xActual + 13, areaInventario.y + 54); //casillas
 
         }
+    }
+
+    private String calcularTiempo() {
+
+        int segundos = GestorPrincipal.getSegundosJuego();
+        int minuto = segundos / 60;
+        int hora = minuto / 60;
+
+        String txt = hora + ":" + minuto + ":" + segundos;
+
+        return txt;
     }
 
 }

@@ -16,8 +16,10 @@ public class GestorPrincipal {
     private Ventana ventana;
     private GestorEstados ge;
 
-    private static int fps = 0,
-            aps = 0;
+    private static int fps = 0, aps = 0;
+
+    private static int segundosJuego = 0;
+    private static int minutosJuego = 0;
 
     public GestorPrincipal(String titulo, int width, int height) {
         this.titulo = titulo;
@@ -44,15 +46,26 @@ public class GestorPrincipal {
         double tiempoTranscurrido; // 
         double deltaTiempo = 0; // CANTIDAD DE TIEMPO HASTA QUE SE REALIZA UNA ACTUALIZACION
 
+        double tiempoJuego = 0;
+
+        long referenciaJuego = System.nanoTime();
+
         /* BUCLE PRINCIPAL DEL JUEGO */
         while (this.enFuncionamiento) {
 
             final long inicioBucle = System.nanoTime(); // valor en nanosegundos    
 
+            final long inicioBucleJuego = System.nanoTime();
+
             tiempoTranscurrido = inicioBucle - refenrenciaActualizacion; // CUANTO HA PASADO ENTRE "refenrenciaActualización" y "inicioBucle" 
+
             refenrenciaActualizacion = inicioBucle;
 
             deltaTiempo += tiempoTranscurrido / nanoSegPorActualizacion;
+
+            // Calculando cuando tiempo dura el jugador 
+            tiempoJuego = (inicioBucleJuego - referenciaJuego) / 1000000000;
+            this.segundosJuego = (int) tiempoJuego;
 
             while (deltaTiempo >= 1) {
                 this.actualizar();
@@ -73,7 +86,17 @@ public class GestorPrincipal {
 
                 referenciaContador = System.nanoTime();
             }
+
         }
+
+    }
+
+    public static int getSegundosJuego() {
+        return segundosJuego;
+    }
+
+    public static int getMinutosJuego() {
+        return minutosJuego;
     }
 
     public static int getFps() {

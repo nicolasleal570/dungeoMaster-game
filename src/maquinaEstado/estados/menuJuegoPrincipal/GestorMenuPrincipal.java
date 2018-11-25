@@ -29,10 +29,10 @@ public class GestorMenuPrincipal implements EstadoJuego {
     @Override
     public void dibujar(Graphics g) {
 
-        DibujoDebug.dibujarRectanguloRelleno(g, panelBienvenida, new Color(0x1BA160));
+        DibujoDebug.dibujarRectanguloRelleno(g, panelBienvenida, new Color(23, 23, 23));
 
-        g.setColor(new Color(23, 23, 23));
-        g.setFont(g.getFont().deriveFont(32f));
+        g.setColor(new Color(0xededed));
+        g.setFont(g.getFont().deriveFont(28f));
 
         String text = "Bienvenido a Dungeon Master";
 
