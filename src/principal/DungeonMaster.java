@@ -9,7 +9,7 @@ public class DungeonMaster {
         GestorPrincipal gp = new GestorPrincipal("Dungeon Master", Constantes.ANCHO_PANTALLA_COMPLETA, Constantes.ALTO_PANTALLA_COMPLETA); // Resolucion 16:9
 
         gp.iniciarJuego();
-        gp.iniciarBuclePrincipal();
+//        gp.iniciarBuclePrincipal();
 
     }
 

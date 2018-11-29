@@ -11,7 +11,7 @@ import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 import maquinaEstado.GestorEstados;
 
-public class SuperficieDibujo extends Canvas {
+public class SuperficieDibujo extends Canvas{
 
     private int width, height;
 
@@ -91,5 +91,6 @@ public class SuperficieDibujo extends Canvas {
     public Raton getRaton() {
         return raton;
     }
+
 
 }

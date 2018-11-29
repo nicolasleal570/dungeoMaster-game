@@ -8,7 +8,7 @@ public class ElementosPrincipales {
 
     //public static Mapa mapa = new Mapa("/recursos/hojaMapa/mapa");
     // MAPA UNICO DEL JUEGO
-    public static MapaTiled mapa = new MapaTiled("/recursos/hojaMapa/mapa-apocaliptico.json");
+    public static MapaTiled mapa = new MapaTiled("/recursos/hojaMapa/mapa-2.json");
 
     // JUGADOR UNICO DEL JUEGO
     public static Jugador jugador = new Jugador();

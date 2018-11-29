@@ -4,11 +4,13 @@ import control.GestorControles;
 import graficos.SuperficieDibujo;
 import graficos.Ventana;
 import herramientas.ElementosPrincipales;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import maquinaEstado.GestorEstados;
 
-public class GestorPrincipal {
+public class GestorPrincipal implements Runnable {
 
-    private boolean enFuncionamiento = false;
+    private static volatile boolean  enFuncionamiento = false;
 
     private String titulo;
     private int width, height;
@@ -16,6 +18,7 @@ public class GestorPrincipal {
     public static SuperficieDibujo sd;
     private Ventana ventana;
     private GestorEstados ge;
+    public Thread thread;
 
     private static int fps = 0, aps = 0;
 
@@ -35,9 +38,24 @@ public class GestorPrincipal {
     }
 
     // INICIA EL BUCLE DEL JUEGO
-    public void iniciarJuego() {
+    public synchronized void iniciarJuego() {
+
         this.enFuncionamiento = true;
-        this.inicializar();
+
+        this.thread = new Thread(this, "Graficos");
+        this.thread.start();
+    }
+    
+    public synchronized void detenerJuego(){
+
+        this.enFuncionamiento = false;
+        
+        try {
+            this.thread.join(); // Termina el thread sin corromper el programa 
+        } catch (InterruptedException ex) {
+            Logger.getLogger(GestorPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     // BUCLE DEL JUEGO 
@@ -125,6 +143,7 @@ public class GestorPrincipal {
         this.sd = new SuperficieDibujo(this.width, this.height);
         this.ventana = new Ventana(titulo, sd);
         this.ge = new GestorEstados(sd); // Inicinado el gestor de estados
+
     }
 
     // CAMBIA LOS ESTADOS DEL JUEGO
@@ -156,6 +175,14 @@ public class GestorPrincipal {
     // MUESTRA LOS GRAFICOS
     private void dibujar() {
         this.sd.dibujar(this.ge);
+
+    }
+
+    @Override
+    public void run() { // Se ejecuta en el segundo thread
+
+        this.inicializar();
+        this.iniciarBuclePrincipal();
 
     }
 

@@ -76,13 +76,13 @@ public class MapaTiled {
 
             JSONObject datosCapa = this.getObjetoJson(capas.get(i).toString()); // Datos de la capa en String
 
+            String tipo = datosCapa.get("type").toString(); // Tipo de la capa.
+
             // Informacion de los datos de las diferentes capas
             int anchoCapa = this.getIntDesdeJson(datosCapa, "width");
             int altoCapa = this.getIntDesdeJson(datosCapa, "height");
             int xCapa = this.getIntDesdeJson(datosCapa, "x");
             int yCapa = this.getIntDesdeJson(datosCapa, "y");
-
-            String tipo = datosCapa.get("type").toString(); // Tipo de la capa. 
 
             switch (tipo) {
                 case "tilelayer":
@@ -355,6 +355,7 @@ public class MapaTiled {
             if (enemigo.getVidaActual() <= 0) {
 
                 this.enemigosMuertos++;
+                ElementosPrincipales.jugador.setEnemigosMuertos(this.enemigosMuertos);
 
                 this.actualizandoParametrosJugador(enemigo); // Actualizando todos los parametros del jugador segun vaya avanzando
 
@@ -509,7 +510,6 @@ public class MapaTiled {
             // Agregando nuevos enemigos para la siguiente orda
             for (int i = 0; i < this.crearEnemigosSiguienteOrda().size(); i++) {
 
-                ElementosPrincipales.jugador.setEnemigosMuertos(this.enemigosMuertos);
                 this.enemigosMapa.add(this.crearEnemigosSiguienteOrda().get(i));
 
             }

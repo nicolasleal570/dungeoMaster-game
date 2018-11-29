@@ -12,8 +12,6 @@ public class Ventana extends JFrame {
     private String titulo;
     private final ImageIcon icono;
 
-    private JTextField nombre = new JTextField();
-
     /**
      * @param titulo de la ventana
      * @param sd superficie de dibujo (canvas)
