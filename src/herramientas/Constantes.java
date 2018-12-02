@@ -26,6 +26,6 @@ public class Constantes {
     public static final int MARGEN_Y = ALTO_JUEGO / 2 - LADO_SPRITE / 2;
 
     // RUTAS DEL JUEGO
-    public static final String RUTA_MAPA_TILED = "/recursos/hojaMapa/dungeon.json";
+    public static final String RUTA_MAPA_TILED = "/recursos/hojaMapa/dm_pradera.json";
 
 }

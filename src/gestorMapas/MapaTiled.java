@@ -658,7 +658,7 @@ public class MapaTiled {
 
         }
 
-        DibujoDebug.dibujarRectanguloRelleno(g, this.zonaSalida, Color.red); // Zona de salida del mapa
+        DibujoDebug.dibujarRectanguloContorno(g, this.zonaSalida, Color.red); // Zona de salida del mapa
 
     }
 

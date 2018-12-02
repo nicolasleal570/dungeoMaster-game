@@ -19,11 +19,11 @@ public class RegistroMapas {
 
         switch (nombreMapa) {
 
-            case "dungeon.json":
+            case "dm_pradera.json":
                 mapa = new Home("/recursos/hojaMapa/" + nombreMapa);
                 break;
 
-            case "mapa-2.json":
+            case "dm_desierto.json":
                 mapa = new Cuarto("/recursos/hojaMapa/" + nombreMapa);
                 break;
 
