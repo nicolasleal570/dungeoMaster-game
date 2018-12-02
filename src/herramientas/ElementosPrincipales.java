@@ -1,14 +1,15 @@
 package herramientas;
 
 import entes.Jugador;
+import gestorMapas.MapaTiled;
+import gestorMapas.mapas.RegistroMapas;
 import inventario.Inventario;
-import mapas.MapaTiled;
 
 public class ElementosPrincipales {
 
     //public static Mapa mapa = new Mapa("/recursos/hojaMapa/mapa");
     // MAPA UNICO DEL JUEGO
-    public static MapaTiled mapa = new MapaTiled("/recursos/hojaMapa/mapa-2.json");
+    public static MapaTiled mapa = RegistroMapas.getMapa("dungeon.json"); // Mapa inicial
 
     // JUGADOR UNICO DEL JUEGO
     public static Jugador jugador = new Jugador();

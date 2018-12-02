@@ -158,6 +158,8 @@ public class Jugador {
         this.dibujarNombre(g, centroX, centroY);
         this.dibujarAlcance(g);
 
+        DibujoDebug.dibujarRectanguloContorno(g, this.limiteArriba, Color.green);
+
     }
 
     // DIBUJA EL ALCANCE DEL ARMA
@@ -692,6 +694,10 @@ public class Jugador {
 
         }
 
+    }
+
+    public Rectangle getLimiteArriba() {
+        return limiteArriba;
     }
 
 }

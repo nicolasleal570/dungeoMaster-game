@@ -19,6 +19,7 @@ public class Teclado implements KeyListener {
     public boolean inventarioActivo = false;
     public boolean recogiendo = false;
     public boolean atacando = false;
+    public boolean entrarPuerta = false;
 
     public boolean start = false;
 
@@ -48,6 +49,10 @@ public class Teclado implements KeyListener {
 
             case KeyEvent.VK_E:
                 this.recogiendo = true;
+                break;
+
+            case KeyEvent.VK_R:
+                this.entrarPuerta = true;
                 break;
 
             case KeyEvent.VK_SPACE:
@@ -94,6 +99,10 @@ public class Teclado implements KeyListener {
 
             case KeyEvent.VK_E:
                 this.recogiendo = false;
+                break;
+
+            case KeyEvent.VK_R:
+                this.entrarPuerta = false;
                 break;
 
             case KeyEvent.VK_SPACE:

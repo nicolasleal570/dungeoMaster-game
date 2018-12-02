@@ -2,7 +2,7 @@ package herramientas;
 
 import java.awt.Point;
 
-public class CalculadoraDistancia {
+public class Calculadora {
 
     public static double getDistanciaEntrePuntos(final Point p1, final Point p2) {
 
@@ -12,6 +12,18 @@ public class CalculadoraDistancia {
                 + Math.pow((p2.getY() - p1.getY()), 2)
         );
 
+    }
+    
+    public static int transformarTilePixel(final int tile){
+        
+        return tile * Constantes.LADO_SPRITE;
+        
+    }
+    
+    public static int transformarPixelTile(final int pixel){
+        
+        return pixel / Constantes.LADO_SPRITE;
+        
     }
 
 }

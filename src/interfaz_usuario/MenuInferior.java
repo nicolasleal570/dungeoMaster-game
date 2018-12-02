@@ -42,7 +42,7 @@ public class MenuInferior {
     // DIBUJA LA INTERFAZ DEL JUEGO 
     public void dibujar(final Graphics g) {
         this.dibujarAreaParametrosJugador(g);
-        this.dibujarAreaControles(g);
+        //this.dibujarAreaControles(g);
         this.dibujarBarraVida(g, (int) ElementosPrincipales.jugador.getVidaActual());
         this.dibujarBarraFuerza(g, ElementosPrincipales.jugador.getFuerza());
         this.dibujarBarraDefensa(g, (int) ElementosPrincipales.jugador.getDefensaActual());
@@ -50,9 +50,8 @@ public class MenuInferior {
         this.dibujarNivelJugador(g, ElementosPrincipales.jugador.getNivel());
         this.dibujarOrdaActualZombies(g, ElementosPrincipales.mapa.getNumeroRonda());
         this.dibujarArmaEquipada(g, "Arma Actual: " + ElementosPrincipales.jugador.getAlmacenEquipo().getArma().getNombre());
-        this.dibujarTiempoJuego(g, "Tiempo de Juego: " + this.calcularTiempo());
-
-        this.dibujarControles(g);
+        //this.dibujarTiempoJuego(g, "Tiempo de Juego: " + this.calcularTiempo());
+        //this.dibujarControles(g);
 
     }
 
