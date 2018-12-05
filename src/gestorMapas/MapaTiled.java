@@ -9,6 +9,8 @@ import herramientas.CargadorRecursos;
 import herramientas.Constantes;
 import herramientas.DibujoDebug;
 import herramientas.ElementosPrincipales;
+import herramientas.MedidorStrings;
+import inventario.ContenedorObjetos;
 import inventario.Objeto;
 import inventario.ObjetoUnicoTiled;
 import inventario.RegistroObjetos;
@@ -45,6 +47,8 @@ public class MapaTiled {
     private final ArrayList<ObjetoUnicoTiled> objetosMapa;
 
     private final ArrayList<Enemigo> enemigosMapa;
+
+    private final ArrayList<ContenedorObjetos> contenedoresMapa;
 
     private final Sprite[] paletaSprites;
 
@@ -101,6 +105,9 @@ public class MapaTiled {
         this.enemigosMapa = new ArrayList<>();
         this.enemigosMapa(globalJson);
 
+        this.contenedoresMapa = new ArrayList<>();
+        this.contenedoresMapa(globalJson);
+
         //Areas de colision por cada actualizacion
         this.areasColisionPorActualizacion = new ArrayList<>();
 
@@ -120,17 +127,19 @@ public class MapaTiled {
     }
 
     private void salidaMapa(JSONObject globalJson) {
-
         JSONObject salida = null;
+        JSONArray coleccionSalidas = this.getArrayJson(globalJson.get("salidas").toString());
 
-        if (globalJson.get("salida").toString() != null) {
-            salida = this.getObjetoJson(globalJson.get("salida").toString());
+        for (int i = 0; i < coleccionSalidas.size(); i++) {
+
+            salida = this.getObjetoJson(coleccionSalidas.get(i).toString());
 
             this.puntoSalida = new Point(this.getIntDesdeJson(salida, "x") * 32,
                     this.getIntDesdeJson(salida, "y") * 32);
 
             this.mapaActual = salida.get("mapaActual").toString(); // Nombre del mapa actual
             this.siguienteMapa = salida.get("siguienteMapa").toString(); // Nombre del siguiente Mapa
+
         }
 
     }
@@ -296,8 +305,8 @@ public class MapaTiled {
 
             int idObjeto = this.getIntDesdeJson(datosObjeto, "id");
             int cantidadObjeto = this.getIntDesdeJson(datosObjeto, "cantidad");
-            int xObjeto = this.getIntDesdeJson(datosObjeto, "x");
-            int yObjeto = this.getIntDesdeJson(datosObjeto, "y");
+            int xObjeto = this.getIntDesdeJson(datosObjeto, "x") * Constantes.LADO_SPRITE;
+            int yObjeto = this.getIntDesdeJson(datosObjeto, "y") * Constantes.LADO_SPRITE;
             Point posicionObjeto = new Point(xObjeto, yObjeto);
 
             Objeto objeto = RegistroObjetos.getObjeto(idObjeto);
@@ -316,8 +325,8 @@ public class MapaTiled {
             JSONObject datosEnemigo = this.getObjetoJson(coleccionEnemigos.get(i).toString());
 
             int idEnemigo = this.getIntDesdeJson(datosEnemigo, "id");
-            int xEnemigo = this.getIntDesdeJson(datosEnemigo, "x");
-            int yEnemigo = this.getIntDesdeJson(datosEnemigo, "y");
+            int xEnemigo = this.getIntDesdeJson(datosEnemigo, "x") * Constantes.LADO_SPRITE;
+            int yEnemigo = this.getIntDesdeJson(datosEnemigo, "y") * Constantes.LADO_SPRITE;
 
             Point posicionEnemigo = new Point(xEnemigo, yEnemigo);
 
@@ -330,12 +339,45 @@ public class MapaTiled {
         }
     }
 
+    private void contenedoresMapa(JSONObject globalJson) {
+
+        JSONArray coleccionContenedores = this.getArrayJson(globalJson.get("contenedores").toString()); // Todos los objetos que se van a poner en el mapa
+
+        for (int i = 0; i < coleccionContenedores.size(); i++) {
+
+            JSONObject datosContenedor = this.getObjetoJson(coleccionContenedores.get(i).toString());
+
+            int posX = this.getIntDesdeJson(datosContenedor, "x");
+            int posY = this.getIntDesdeJson(datosContenedor, "y");
+            Point posicion = new Point(posX, posY);
+
+            JSONArray objetos = this.getArrayJson(datosContenedor.get("objetos").toString());
+            int[] idObjetos = new int[objetos.size()];
+            int[] cantidades = new int[objetos.size()];
+
+            for (int j = 0; j < objetos.size(); j++) {
+
+                JSONObject datosObjetos = this.getObjetoJson(objetos.get(j).toString());
+
+                idObjetos[j] = this.getIntDesdeJson(datosObjetos, "idObjeto");
+                cantidades[j] = this.getIntDesdeJson(datosObjetos, "cantidad");
+
+            }
+
+            final ContenedorObjetos contenedor = new ContenedorObjetos(posicion, idObjetos, cantidades);
+            this.contenedoresMapa.add(contenedor);
+
+        }
+
+    }
+
     // ACTUALIZA EL MAPA
     public void actualizar() {
 
         actualizarAreasColision();
         actualizarSalidaMapa();
         actualizarRecogidaObjetos();
+        actualizarRecogidaContenedores();
         actualizarEnemigos();
         actualizarAtaques();
         actualizarNivelJugador();
@@ -519,12 +561,7 @@ public class MapaTiled {
                         && GestorControles.teclado.recogiendo) {
 
                     // Comprobando que el jugador tiene menos de 10 objetos
-                    /*if (ElementosPrincipales.inventario.getObjeto(i) != null
-                            && ElementosPrincipales.inventario.getObjeto(i).getCantidad() <= 10) {
-                        System.out.println("Recogido");
-                    } else {
-                        System.out.println("Maximo posibles");
-                    }*/
+                    System.out.println(objetoActual.getCantidad());
                     ElementosPrincipales.inventario.recogerObjeto(objetoActual);
                     this.objetosMapa.remove(i);
 
@@ -536,7 +573,37 @@ public class MapaTiled {
 
     }
 
-    // ACTUALIZA EL NIVEL DEL JUGADOR
+    private void actualizarRecogidaContenedores() {
+
+        if (!this.contenedoresMapa.isEmpty()) {
+
+            final Rectangle areaJugador = new Rectangle(ElementosPrincipales.jugador.getPosXInt(),
+                    ElementosPrincipales.jugador.getPosYInt(),
+                    Constantes.LADO_SPRITE, Constantes.LADO_SPRITE);
+
+            for (int i = 0; i < this.contenedoresMapa.size(); i++) {
+
+                final ContenedorObjetos contenedorActual = this.contenedoresMapa.get(i);
+
+                final Rectangle posicionObjetoActual = new Rectangle(contenedorActual.getPosicion().x * Constantes.LADO_SPRITE,
+                        contenedorActual.getPosicion().y * Constantes.LADO_SPRITE,
+                        Constantes.LADO_SPRITE,
+                        Constantes.LADO_SPRITE);
+
+                if (areaJugador.intersects(posicionObjetoActual) && GestorControles.teclado.recogiendo) {
+
+                    ElementosPrincipales.inventario.recogerObjeto(contenedorActual);
+                    this.contenedoresMapa.remove(i);
+
+                }
+
+            }
+
+        }
+
+    }
+
+// ACTUALIZA EL NIVEL DEL JUGADOR
     private void actualizarNivelJugador() {
 
         if (ElementosPrincipales.jugador.getExperiencia() > 100 * ElementosPrincipales.jugador.getNivel()) {
@@ -599,6 +666,20 @@ public class MapaTiled {
 
     public void dibujar(Graphics g) {
 
+        this.dibujarMapa(g);
+
+        this.dibujarObjetos(g);
+
+        this.dibujarEnemigos(g);
+
+        this.dibujarSalidas(g);
+
+        this.dibujarContenedores(g);
+
+    }
+
+    private void dibujarMapa(Graphics g) {
+
         // Dibujando el mapa
         for (int i = 0; i < this.capasSprites.size(); i++) {
 
@@ -630,6 +711,10 @@ public class MapaTiled {
 
         }
 
+    }
+
+    private void dibujarObjetos(Graphics g) {
+
         /* DIBUJANDO TODOS LOS OBJETOS DEL MAPA */
         for (int i = 0; i < this.objetosMapa.size(); i++) {
 
@@ -643,6 +728,10 @@ public class MapaTiled {
             DibujoDebug.dibujarImagen(g, objActual.getObjeto().getSprite().getImagen(), puntoX, puntoY);
 
         }
+
+    }
+
+    private void dibujarEnemigos(Graphics g) {
 
         /* DIBUJANDO LOS ENEMIGOS */
         for (int i = 0; i < this.enemigosMapa.size(); i++) {
@@ -658,8 +747,51 @@ public class MapaTiled {
 
         }
 
+    }
+
+    private void dibujarSalidas(Graphics g) {
+        g.setColor(Color.red);
         DibujoDebug.dibujarRectanguloContorno(g, this.zonaSalida, Color.red); // Zona de salida del mapa
 
+        int nDistancia = (int) Calculadora.getDistanciaEntrePuntos(this.puntoSalida, ElementosPrincipales.jugador.getPosicion()) / 32;
+        g.setFont(g.getFont().deriveFont(9f));
+        if (nDistancia < 5) {
+
+            String[] distancia = this.siguienteMapa.split("\\.");
+
+            int puntoX = this.puntoSalida.x - ElementosPrincipales.jugador.getPosXInt() + Constantes.MARGEN_X
+                    + this.zonaSalida.width / 2 - MedidorStrings.medirAnchoPixeles(g, distancia[0]) / 2;
+
+            int puntoY = this.puntoSalida.y - ElementosPrincipales.jugador.getPosYInt() + Constantes.MARGEN_Y
+                    + this.zonaSalida.height / 2 + MedidorStrings.medirAltoPixeles(g, distancia[0]) / 2;
+
+            g.setColor(new Color(23, 23, 23));
+            DibujoDebug.dibujarRectanguloRelleno(g, puntoX - 4,
+                    puntoY - MedidorStrings.medirAltoPixeles(g, distancia[0]),
+                    MedidorStrings.medirAnchoPixeles(g, distancia[0]) + 8, MedidorStrings.medirAltoPixeles(g, distancia[0]) + 6);
+
+            g.setColor(Color.white);
+            DibujoDebug.dibujarString(g, distancia[0], puntoX, puntoY, Color.red);
+        }
+
+        g.setFont(g.getFont().deriveFont(12f));
+    }
+
+    private void dibujarContenedores(Graphics g) {
+        if (!this.contenedoresMapa.isEmpty()) {
+
+            for (ContenedorObjetos contenedorActual : this.contenedoresMapa) {
+
+                int puntoX = contenedorActual.getPosicion().x * Constantes.LADO_SPRITE
+                        - ElementosPrincipales.jugador.getPosXInt() + Constantes.MARGEN_X;
+                int puntoY = contenedorActual.getPosicion().y * Constantes.LADO_SPRITE
+                        - ElementosPrincipales.jugador.getPosYInt() + Constantes.MARGEN_Y;
+
+                contenedorActual.dibujar(g, puntoX, puntoY);
+
+            }
+
+        }
     }
 
     /* DEVUELVE UN OBJETO JSON */
@@ -802,8 +934,8 @@ public class MapaTiled {
         return objetoUnico;
     }
 
-    public String getMapaActual() {
-        return mapaActual;
+    public Point getPuntoSalida() {
+        return puntoSalida;
     }
 
     public String getSiguienteMapa() {
@@ -814,8 +946,9 @@ public class MapaTiled {
         return zonaSalida;
     }
 
-    public Point getPuntoSalida() {
-        return puntoSalida;
+    public String getVisitado() {
+        return visitado;
     }
 
+    
 }

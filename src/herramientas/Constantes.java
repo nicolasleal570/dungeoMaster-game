@@ -1,9 +1,12 @@
 package herramientas;
 
+import java.awt.Font;
+
 public class Constantes {
 
     // LADOS DE UN SPRITE
     public static final int LADO_SPRITE = 32;
+    public static int LADO_CURSOR = 0;
 
     // DIMENSIONES REALES DEL JUEGO
     public static int ANCHO_JUEGO = 640;
@@ -26,6 +29,9 @@ public class Constantes {
     public static final int MARGEN_Y = ALTO_JUEGO / 2 - LADO_SPRITE / 2;
 
     // RUTAS DEL JUEGO
-    public static final String RUTA_MAPA_TILED = "/recursos/hojaMapa/dm_pradera.json";
+    public static final String RUTA_MAPA_TILED = "/recursos/hojaMapa/pradera.json";
+    
+    // FUENTE
+    public static Font fuentePixel = CargadorRecursos.cargarFuente("/recursos/fuentes/px10.ttf");
 
 }

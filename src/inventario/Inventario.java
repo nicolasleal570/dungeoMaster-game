@@ -11,7 +11,7 @@ public class Inventario {
     public Inventario() {
 
         /* OBJETOS DEL JUEGO */
-        this.objetos = new ArrayList<Objeto>();
+        this.objetos = new ArrayList<>();
 
     }
 
@@ -22,6 +22,7 @@ public class Inventario {
 
         // Modificado para aumentar el numero de elementos en el inventario
         int cantidad = objActual.getCantidad();
+        System.out.println(cantidad);
         objeto.setCantidad(cantidad);
 
         if (this.objetoExiste(objeto)) {
@@ -34,6 +35,31 @@ public class Inventario {
 
         }
 
+    }
+
+    public void recogerObjeto(final ContenedorObjetos co) {
+
+        for (Objeto objeto : co.getObjetosContenedor()) {
+
+            int cantidad = objeto.getCantidad();
+
+            if (cantidad > 1 && !(objeto instanceof Arma)) {
+
+                objeto.setCantidad(cantidad - 1);
+
+            } else {
+                objeto.setCantidad(cantidad);
+            }
+
+            if (this.objetoExiste(objeto)) {
+
+                this.incrementarObjeto(objeto, objeto.getCantidad());
+            } else {
+
+                this.objetos.add(objeto);
+
+            }
+        }
     }
 
     // VERIFICA SI EL OBJETO EXISTE

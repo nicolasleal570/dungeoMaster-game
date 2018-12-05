@@ -56,6 +56,8 @@ public class SuperficieDibujo extends Canvas{
 
         Graphics2D g = (Graphics2D) buffer.getDrawGraphics(); // Graficos mejorados para pantalla completa
 
+        g.setFont(Constantes.fuentePixel);
+        
         g.setFont(g.getFont().deriveFont(12f));
 
         g.setColor(Color.black);

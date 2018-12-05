@@ -1,16 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gestorMapas.mapas;
 
 import gestorMapas.MapaTiled;
 
-/**
- *
- * @author nleal
- */
 public class RegistroMapas {
 
     public static MapaTiled getMapa(final String nombreMapa) {
@@ -19,12 +10,16 @@ public class RegistroMapas {
 
         switch (nombreMapa) {
 
-            case "dm_pradera.json":
-                mapa = new Home("/recursos/hojaMapa/" + nombreMapa);
+            case "pradera.json":
+                mapa = new Pradera("/recursos/hojaMapa/" + nombreMapa);
                 break;
 
-            case "dm_desierto.json":
-                mapa = new Cuarto("/recursos/hojaMapa/" + nombreMapa);
+            case "desierto.json":
+                mapa = new Desierto("/recursos/hojaMapa/" + nombreMapa);
+                break;
+
+            case "apocalipsis.json":
+                mapa = new Apocalipsis("/recursos/hojaMapa/" + nombreMapa);
                 break;
 
         }

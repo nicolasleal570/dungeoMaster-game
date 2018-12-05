@@ -2,9 +2,9 @@ package gestorMapas.mapas;
 
 import gestorMapas.MapaTiled;
 
-public class Home extends MapaTiled {
+public class Desierto extends MapaTiled {
 
-    public Home(String ruta) {
+    public Desierto(String ruta) {
         super(ruta);
     }
 

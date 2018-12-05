@@ -9,7 +9,7 @@ public class ElementosPrincipales {
 
     //public static Mapa mapa = new Mapa("/recursos/hojaMapa/mapa");
     // MAPA UNICO DEL JUEGO
-    public static MapaTiled mapa = RegistroMapas.getMapa("dm_pradera.json"); // Mapa inicial
+    public static MapaTiled mapa = RegistroMapas.getMapa("pradera.json"); // Mapa inicial
 
     // JUGADOR UNICO DEL JUEGO
     public static Jugador jugador = new Jugador();

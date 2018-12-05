@@ -47,7 +47,9 @@ public class MenuEquipo extends SeccionMenu {
             etiquetaArma.width - 2, Constantes.LADO_SPRITE);
 
     // Objeto que se seleciona para equipar
-    Objeto objetoSeleccionado = null;
+    private Objeto objetoSeleccionado = null;
+    private Objeto objetoEquipado = null;
+    private boolean armado = false;
 
     /**
      * CONSTRUCTOR DEL MENU DE EQUIPO
@@ -114,10 +116,12 @@ public class MenuEquipo extends SeccionMenu {
                     if (obj.getCantidad() > 0) {
 
                         this.objetoSeleccionado = obj;
+                        this.objetoEquipado = obj;
 
                     } else {
 
                         this.objetoSeleccionado = null;
+                        this.objetoEquipado = null;
                     }
 
                 }
@@ -135,7 +139,15 @@ public class MenuEquipo extends SeccionMenu {
                 ElementosPrincipales.jugador.getAlmacenEquipo().cambiarArma((Arma) this.objetoSeleccionado);
 
                 this.objetoSeleccionado.setCantidad(this.objetoSeleccionado.getCantidad() - 1);
+                this.armado = true;
                 this.objetoSeleccionado = null;
+
+            }
+
+            if (this.armado && GestorPrincipal.sd.getRaton().isClickDerecho() && this.objetoEquipado != null) {
+
+                this.objetoEquipado.setCantidad(this.objetoEquipado.getCantidad() + 1);
+                this.objetoEquipado = null;
 
             }
 

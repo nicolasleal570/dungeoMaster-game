@@ -2,6 +2,7 @@ package control;
 
 import graficos.SuperficieDibujo;
 import herramientas.CargadorRecursos;
+import herramientas.Constantes;
 import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.MouseInfo;
@@ -33,6 +34,8 @@ public class Raton extends MouseAdapter {
 
         BufferedImage icono = CargadorRecursos.cargarImagenCompatibleTranslucida("/recursos/iconos/cursor.png");
 
+        Constantes.LADO_CURSOR = icono.getWidth();
+        
         Point punta = new Point(0, 0);
 
         this.cursor = configuracion.createCustomCursor(icono, punta, "Cursor modificado");

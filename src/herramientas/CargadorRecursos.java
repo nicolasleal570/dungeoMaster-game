@@ -1,5 +1,7 @@
 package herramientas;
 
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
@@ -95,6 +97,25 @@ public class CargadorRecursos {
         }
 
         return contenido;
+    }
+
+    public static Font cargarFuente(final String ruta) {
+
+        Font fuente = null;
+
+        try {
+
+            InputStream entradaBytes = ClassLoader.class.getResourceAsStream(ruta);
+
+            fuente = Font.createFont(Font.TRUETYPE_FONT, entradaBytes);
+
+            fuente = fuente.deriveFont(12f);
+
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+        }
+
+        return fuente;
     }
 
 }

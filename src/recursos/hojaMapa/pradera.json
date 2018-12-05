@@ -795,12 +795,76 @@
         "x": 224,
         "y": 224
     },
-    "salida": {
-        "mapaActual": "dm_pradera.json",
-        "siguienteMapa": "dm_desierto.json",
-        "x": 12,
-        "y": 6
-    },
-    "objetos": [],
-    "enemigos": []
+    "salidas": [
+        {
+            "mapaActual": "pradera.json",
+            "siguienteMapa": "desierto.json",
+            "x": 12,
+            "y": 6
+        },
+        {
+            "mapaActual": "pradera.json",
+            "siguienteMapa": "apocalipsis.json",
+            "x": 10,
+            "y": 6
+        }
+    ],
+    "objetos": [
+        {
+            "id": 0,
+            "cantidad": 1,
+            "x": 10, 
+            "y": 9
+        }
+    ],
+    "enemigos": [
+
+    ],
+    "contenedores": [
+
+        {
+            "x": 10,
+            "y": 10,
+            "objetos": [
+
+                {
+                    "idObjeto": 0,
+                    "cantidad": 2
+                },
+                {
+                    "idObjeto": 1,
+                    "cantidad": 3
+                },
+                {
+                    "idObjeto": 3,
+                    "cantidad": 4
+                }
+
+            ]
+        },
+        {
+            "x": 8,
+            "y": 10,
+            "objetos": [
+                {
+                    "idObjeto": 21,
+                    "cantidad": 1
+                },
+                {
+                    "idObjeto": 20,
+                    "cantidad": 1
+                },
+                {
+                    "idObjeto": 1,
+                    "cantidad": 1
+                },
+                {
+                    "idObjeto": 3,
+                    "cantidad": 1
+                }
+
+            ]
+        }
+
+    ]
 }

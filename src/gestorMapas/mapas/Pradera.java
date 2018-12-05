@@ -2,9 +2,9 @@ package gestorMapas.mapas;
 
 import gestorMapas.MapaTiled;
 
-public class Cuarto extends MapaTiled {
+public class Pradera extends MapaTiled {
 
-    public Cuarto(String ruta) {
+    public Pradera(String ruta) {
         super(ruta);
     }
 

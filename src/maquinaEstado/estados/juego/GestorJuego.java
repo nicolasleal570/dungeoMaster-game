@@ -53,6 +53,7 @@ public class GestorJuego implements EstadoJuego {
     // DIBUJA LOS ELEMENTOS EN EL JUEGO
     @Override
     public void dibujar(Graphics g) {
+
         /* DIBUJANDO EL MAPA EN EL CANVAS */
         ElementosPrincipales.mapa.dibujar(g);
 
